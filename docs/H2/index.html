@@ -115,11 +115,12 @@ svg{display:block}
 .notif .from b{color:#0F1B2D}.notif .from span:last-child{margin-left:auto}
 .notif p{font-size:19px;margin-top:6px}
 .link{color:#0369A1;text-decoration:underline;background:none;border:0;padding:0;font-size:inherit;font-family:inherit;word-break:break-all}
-.dock{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:rgb(255 255 255 / .22);border-radius:24px;padding:12px 8px 10px;margin-top:6px}
-.app{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;font-size:13px;color:#fff}
-.app .ic{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;background:#fff}
+.dock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;background:rgb(255 255 255 / .22);border-radius:24px;padding:12px 8px 10px;margin-top:6px}
+.app{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;font-size:13px;color:#fff;min-width:0;text-align:center}
+.app .ic{width:min(58px,13vw);height:min(58px,13vw);border-radius:16px;display:grid;place-items:center;background:#fff}
 .app .ic svg{width:30px;height:30px}
 .app.ea{font-weight:700}
+@media (max-width:380px){ .app{font-size:11px;gap:4px} .dock{padding:10px 4px 8px;gap:4px} }
 .app.ea .ic{background:#fff;box-shadow:0 0 0 4px #FDE68A;animation:glow 1.8s infinite ease-in-out}
 @keyframes glow{0%,100%{box-shadow:0 0 0 3px #FDE68A}50%{box-shadow:0 0 0 7px rgb(253 230 138 / .55)}}
 
@@ -327,6 +328,49 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
 .tabs button{flex:1;border:0;background:none;border-radius:9px;padding:9px 6px;font-size:14px;font-weight:700;color:var(--muted)}
 .tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
 .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--sun-soft);color:var(--sun)}
+
+/* ---------- caso 3: conversa no WhatsApp (simulada, sem marca) ---------- */
+:root{ --chat-bg:#EFE7DD; --chat-in:#FFFFFF; --chat-out:#D9FDD3; --chat-ink:#111B21; --chat-meta:#667781; --chat-head:#0B6E5F; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --chat-bg:#0B141A; --chat-in:#202C33; --chat-out:#005C4B; --chat-ink:#E9EDEF; --chat-meta:#8696A0; --chat-head:#1F2C34; } }
+:root[data-theme="dark"]{ --chat-bg:#0B141A; --chat-in:#202C33; --chat-out:#005C4B; --chat-ink:#E9EDEF; --chat-meta:#8696A0; --chat-head:#1F2C34; }
+.chat{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:var(--chat-bg);color:var(--chat-ink);display:flex;flex-direction:column}
+.chat-head{background:var(--chat-head);color:#fff;display:flex;align-items:center;gap:12px;padding:12px 14px}
+.chat-head .avatar{width:44px;height:44px;font-size:17px}
+.chat-head b{display:block;font-size:19px}
+.chat-head small{font-size:14px;opacity:.85}
+.verified{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#25B4F5;margin-left:4px;vertical-align:-2px}
+.verified svg{width:12px;height:12px;stroke:#fff}
+.chat-body{padding:14px 12px 16px;display:flex;flex-direction:column;gap:10px;min-height:220px}
+.daychip{align-self:center;background:var(--chat-in);color:var(--chat-meta);font-size:13px;padding:3px 10px;border-radius:8px}
+.bub{max-width:88%;padding:10px 12px 6px;border-radius:14px;font-size:19px;line-height:1.4;box-shadow:0 1px 1px rgb(0 0 0 / .12);animation:drop .35s ease-out both}
+.bub.in{background:var(--chat-in);align-self:flex-start;border-top-left-radius:4px}
+.bub.out{background:var(--chat-out);align-self:flex-end;border-top-right-radius:4px}
+.bub .meta{display:block;text-align:right;font-size:12px;color:var(--chat-meta);margin-top:2px}
+.bub .fw{display:flex;align-items:center;gap:4px;font-size:13px;color:var(--chat-meta);font-style:italic;margin-bottom:2px}
+.bub .fw svg{width:14px;height:14px;stroke:currentColor}
+.bub p + p{margin-top:6px}
+.bub ul{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.msgrow{display:flex;align-items:center;gap:8px}
+.fwdBtn{flex:none;width:56px;height:56px;border-radius:50%;border:0;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;box-shadow:0 0 0 4px var(--accent-soft);animation:glow2 1.8s infinite ease-in-out}
+.fwdBtn svg{width:26px;height:26px;stroke:currentColor}
+@keyframes glow2{0%,100%{box-shadow:0 0 0 3px var(--accent-soft)}50%{box-shadow:0 0 0 9px var(--accent-soft)}}
+.fwdLbl{font-size:14px;font-weight:700;color:var(--accent);text-align:center;margin-top:2px}
+.audioMsg{display:flex;align-items:center;gap:10px;min-width:230px}
+.audioMsg button{width:44px;height:44px;border-radius:50%;border:0;background:#0B6E5F;color:#fff;display:grid;place-items:center;flex:none}
+.audioMsg button svg{width:20px;height:20px;fill:#fff}
+.audioMsg .wv{display:flex;gap:3px;align-items:center;height:28px;flex:1}
+.audioMsg .wv i{width:3px;border-radius:2px;background:var(--chat-meta);opacity:.7}
+.audioMsg.on .wv i{animation:eq .9s infinite ease-in-out;background:#0B6E5F;opacity:1}
+.audioMsg small{font-size:13px;color:var(--chat-meta)}
+.qr{display:flex;flex-direction:column;gap:6px;align-self:flex-start;width:88%}
+.qr button{border:0;border-radius:12px;background:var(--chat-in);color:#027EB5;font-weight:700;font-size:18px;padding:12px;box-shadow:0 1px 1px rgb(0 0 0 / .12)}
+.typing{align-self:flex-start;background:var(--chat-in);border-radius:14px;padding:12px 14px;display:flex;gap:5px}
+.typing i{width:8px;height:8px;border-radius:50%;background:var(--chat-meta);animation:pulse 1.2s infinite ease-in-out}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+.contact{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:14px 16px;border:0;border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);font-size:20px;font-weight:700}
+.contact small{display:block;font-weight:400;font-size:15px;color:var(--muted)}
+.decide-note{background:var(--surface);border-radius:var(--r);padding:12px 16px;font-size:18px;color:var(--muted);box-shadow:var(--shadow)}
+.slot.g{background:var(--line);border:0;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -360,6 +404,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     <symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
     <symbol id="i-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4M14 10v4"/></symbol>
     <symbol id="i-hand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L6 14"/></symbol>
+    <symbol id="i-fwd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l6 6-6 6"/><path d="M21 11H10a6 6 0 0 0-6 6v2"/></symbol>
   </defs>
 </svg>
 
@@ -369,7 +414,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
   <section class="screen" data-s="inicio">
     <div class="cover">
       <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4l22 8v16c0 15-9.5 26-22 32C19.5 54 10 43 10 28V12z" fill="#fff" opacity=".95"/><path d="M22 32l7 7 14-15" fill="none" stroke="#0E7C70" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <div><b>Entenda Antes</b><span>Protótipo para o teste da H2 · Maria entende sozinha</span></div>
+      <div><b>Entenda Antes</b><span>Protótipo para os testes da H2 (Maria entende sozinha) e da H3 (a tradução muda a decisão)</span></div>
     </div>
     <button class="guideLink" id="btnGuia"><span class="bubble"><svg><use href="#i-book"/></svg></span><span><b>Primeira vez? Veja como funciona o teste</b><small>Guia rápido e visual · 6 passos, 2 minutos</small></span><svg class="chev"><use href="#i-chev"/></svg></button>
     <div class="fac">
@@ -380,6 +425,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
         <div class="cases" role="radiogroup" aria-label="Caso de teste">
           <button class="case" data-caso="golpe" aria-pressed="true"><span class="bubble b-red"><svg><use href="#i-chat"/></svg></span><span><b>Caso 1 · Mensagem de golpe</b><small>SMS falso do INSS pedindo PIX</small></span><span class="radio"></span></button>
           <button class="case" data-caso="consignado" aria-pressed="false"><span class="bubble b-sun"><svg><use href="#i-doc"/></svg></span><span><b>Caso 2 · Contrato de consignado</b><small>Foto do papel e as cláusulas importantes</small></span><span class="radio"></span></button>
+          <button class="case" data-caso="whats" aria-pressed="false"><span class="bubble b-teal"><svg><use href="#i-chat"/></svg></span><span><b>Caso 3 · H3 · Pelo WhatsApp</b><small>Decisão antes e depois do resumo no chat</small></span><span class="radio"></span></button>
         </div>
       </div>
       <label for="pid">Código do participante
@@ -640,6 +686,60 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     <button class="listen" data-falar="passo2"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir as opções</button>
   </section>
 
+  <!-- ============ CASO 3 (H3): mensagem no WhatsApp ============ -->
+  <section class="screen" data-s="wa1" hidden>
+    <div class="task"><span class="bubble b-sun"><svg><use href="#i-flag"/></svg></span><div><b class="k">Sua tarefa</b><span id="wa1Task">Chegou esta mensagem no seu WhatsApp. Leia com calma.</span></div></div>
+    <div class="chat">
+      <div class="chat-head"><span class="avatar" style="background:#E8D5B5;color:#7A5A1E">CF</span><div><b>Crédito Fácil Brasil</b><small>número desconhecido</small></div></div>
+      <div class="chat-body">
+        <span class="daychip">HOJE</span>
+        <div class="msgrow">
+          <div class="bub in" style="max-width:none;flex:1">
+            <p>Olá, Maria! 🎉 Seu empréstimo de <b>R$ 3.000</b> foi <b>APROVADO</b>.</p>
+            <p>Para liberar o dinheiro HOJE, pague a <b>taxa de liberação de R$ 150</b> pelo PIX.</p>
+            <p>Chave PIX: pix@creditofacilbr.com</p>
+            <p>Oferta válida só até as 18h!</p>
+            <span class="meta">10:32</span>
+          </div>
+          <div id="fwdWrap" hidden><button class="fwdBtn" id="btnFwd" aria-label="Encaminhar mensagem"><svg><use href="#i-fwd"/></svg></button><div class="fwdLbl">Encaminhar</div></div>
+        </div>
+      </div>
+    </div>
+    <button class="primary" id="btnJaLi">Já li a mensagem</button>
+  </section>
+
+  <section class="screen" data-s="h3antes" hidden>
+    <div class="center-art" aria-hidden="true"><svg viewBox="0 0 150 150" style="width:110px;height:110px"><circle cx="75" cy="75" r="70" fill="var(--accent-soft)"/><text x="75" y="100" text-anchor="middle" font-size="80" font-weight="700" fill="var(--accent)" font-family="Atkinson Hyperlegible, Arial, sans-serif">?</text></svg></div>
+    <h2 class="title" style="text-align:center">Antes de qualquer ajuda: o que você faria com essa mensagem?</h2>
+    <div data-decgroup="antes" class="facts"></div>
+    <button class="listen" data-falar="passo3"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir as opções</button>
+  </section>
+
+  <section class="screen" data-s="waContatos" hidden>
+    <button class="back" data-voltar="wa1"><svg><use href="#i-back"/></svg>Voltar</button>
+    <h2 class="title">Encaminhar para…</h2>
+    <button class="contact" data-wacontato="Pedro"><span class="avatar b-plum">PE</span><span>Pedro (filho)<small>online há 5 min</small></span></button>
+    <button class="contact" data-wacontato="Família"><span class="avatar b-sun">FA</span><span>Família 💛<small>grupo · 8 pessoas</small></span></button>
+    <button class="contact" id="waEA"><span class="avatar" style="background:#0369A1;color:#fff"><svg style="width:26px;height:26px;color:#fff"><use href="#i-lupa"/></svg></span><span>Entenda Antes<span class="verified"><svg><use href="#i-check"/></svg></span><small>Assistente: entende mensagens e contratos</small></span></button>
+    <button class="contact" data-wacontato="Farmácia"><span class="avatar b-teal">FB</span><span>Farmácia Bem Estar<small>ontem</small></span></button>
+  </section>
+
+  <section class="screen" data-s="waBot" hidden>
+    <div class="appbar" style="justify-content:flex-end"><button class="ghost" data-encerrar>Encerrar</button></div>
+    <div class="chat">
+      <div class="chat-head"><span class="avatar" style="background:#fff;color:#0369A1"><svg style="width:26px;height:26px"><use href="#i-lupa"/></svg></span><div><b>Entenda Antes<span class="verified"><svg><use href="#i-check"/></svg></span></b><small id="botStatus">online</small></div></div>
+      <div class="chat-body" id="botBody" aria-live="polite"></div>
+    </div>
+    <button class="primary" id="btnBotFim" hidden>Continuar</button>
+  </section>
+
+  <section class="screen" data-s="h3depois" hidden>
+    <div class="center-art" aria-hidden="true"><svg viewBox="0 0 150 150" style="width:110px;height:110px"><circle cx="75" cy="75" r="70" fill="var(--accent-soft)"/><text x="75" y="100" text-anchor="middle" font-size="80" font-weight="700" fill="var(--accent)" font-family="Atkinson Hyperlegible, Arial, sans-serif">?</text></svg></div>
+    <h2 class="title" style="text-align:center">E agora, o que você vai fazer com essa mensagem?</h2>
+    <div data-decgroup="depois" class="facts"></div>
+    <button class="listen" data-falar="passo3"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir as opções</button>
+  </section>
+
   <!-- ============ fim ============ -->
   <section class="screen" data-s="fim" hidden>
     <div class="end ok" id="fimOk">
@@ -652,7 +752,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
       <div class="badge"><svg><use href="#i-alert"/></svg></div>
       <h2 id="fimBadTit">Atenção</h2>
       <p id="fimBadTxt"></p>
-      <div class="push"><span class="logo"><svg><use href="#i-lupa"/></svg></span><div><small>Entenda Antes · agora</small>Pedro foi avisado para ajudar você.</div></div>
+      <div class="push"><span class="logo"><svg><use href="#i-lupa"/></svg></span><div><small>Entenda Antes · agora</small><span id="fimBadPush">Pedro foi avisado para ajudar você.</span></div></div>
     </div>
     <div class="handoff"><span class="bubble b-teal"><svg><use href="#i-people"/></svg></span><div><strong>Fim da tarefa. Obrigado!</strong><br>Entregue o celular para a pessoa que está acompanhando o teste.</div></div>
     <button class="fbtn alt" id="btnParaFac" style="align-self:center">Continuar (facilitador)</button>
@@ -694,11 +794,12 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
   <!-- ============ FACILITADOR: resultados ============ -->
   <section class="screen" data-s="resultados" hidden>
     <div class="fac">
-      <span class="eyebrow"><svg><use href="#i-clip"/></svg>Resultados · H2</span>
+      <span class="eyebrow"><svg><use href="#i-clip"/></svg>Resultados · H2 e H3</span>
       <h2>Como está o teste</h2>
       <div class="tabs" role="tablist">
         <button role="tab" data-tab="golpe" aria-selected="true">Caso 1 · Golpe</button>
         <button role="tab" data-tab="consignado" aria-selected="false">Caso 2 · Consignado</button>
+        <button role="tab" data-tab="whats" aria-selected="false">Caso 3 · WhatsApp</button>
       </div>
       <div class="goal">
         <div class="top"><b id="goalNum">0 de 10</b><span class="empty">sucessos · meta: 7 de 10</span></div>
@@ -710,7 +811,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
       <div class="tbl"><table><thead><tr><th>Part.</th><th>Caso</th><th>Tempo</th><th>Entendeu</th><th>Passo</th><th>Seguro</th><th>Ajuda</th><th>Fácil (1–5)</th><th>Usaria</th><th>Sucesso</th></tr></thead><tbody id="tbody"></tbody></table></div>
       <p class="empty" id="semDados" hidden>Nenhuma sessão salva neste aparelho ainda.</p>
       <p class="empty" id="treinoInfo"></p>
-      <p style="font-size:14px">Para levar à planilha, copie o texto abaixo e cole no Google Planilhas. Vão as sessões dos dois casos, sem as de treino.</p>
+      <p style="font-size:14px">Para levar à planilha, copie o texto abaixo e cole no Google Planilhas. Vão as sessões de todos os casos, sem as de treino.</p>
       <pre class="tsv" id="tsv"></pre>
       <div class="row">
         <button class="fbtn" id="btnCopiar">Copiar para planilha</button>
@@ -749,7 +850,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
   const novaSessao = (id, idade, caso, treino) => ({
     id, idade, caso, treino, inicio: new Date().toISOString(), t0: agora(),
     eventos: [], audio: 0, linkSms: 0, caminhosErrados: 0,
-    identificou: '', q2total: '', q2seguro: '', passo: '', seguro: null,
+    identificou: '', q2total: '', q2seguro: '', antes: '', depois: '', mudou: false, avisouPedro: false, passo: '', seguro: null,
     ajuda: 'nao', facilidade: null, usaria: '', obs: '', duracaoSeg: null, encerrou: false, sucesso: false
   });
   const log = (tipo, extra) => { if (s) s.eventos.push({ t: Math.round((agora()-s.t0)/100)/10, tipo, ...(extra||{}) }); };
@@ -760,6 +861,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     $$('[data-s]').forEach(el => el.hidden = el.dataset.s !== nome);
     window.scrollTo(0,0); const area=$('#tela'); if (area) area.scrollTop = 0;
     log('tela', { tela: nome }); $('#toast').hidden = true; pararAudio();
+    if (nome !== 'waBot' && typeof pararConversa === 'function') pararConversa();
   }
 
   // ---------- toast ----------
@@ -774,6 +876,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     resultado: 'Perigo. Esta mensagem parece golpe. Não pague e não abra o link. O que pedem: pagar oitenta e nove reais e noventa centavos pelo PIX em até vinte e quatro horas. Quem diz ser: o INSS. Por que é perigoso: o INSS não cobra taxa para manter o benefício. O INSS não manda link por mensagem. E o prazo curto serve para apressar você.',
     resultado2: 'Atenção. Leia antes de assinar: os juros estão acima do limite e há dois itens que você pode recusar. Você recebe cinco mil reais e paga no total doze mil, novecentos e nove reais, em oitenta e quatro parcelas de cento e cinquenta e três reais e sessenta e oito centavos, descontadas do seu benefício por sete anos. Você paga mais que o dobro do que recebe. O contrato inclui um seguro de trezentos e noventa reais. Você pode recusar. Obrigar a levar o seguro junto é venda casada, proibida pelo Código de Defesa do Consumidor. O contrato também inclui um cartão de crédito consignado, que reserva cinco por cento do seu benefício todo mês. Você não é obrigada a aceitar. Os juros são de dois vírgula quarenta e nove por cento ao mês, acima do limite que o INSS permite. Podem ser juros abusivos. O prazo é de sete anos: quanto mais longo, mais juros você paga. E você pode desistir em até sete dias depois de assinar.',
     passo: 'O que você vai fazer? Pagar a taxa pelo PIX. Ligar para o INSS no cento e trinta e cinco. Abrir o link para ver. Não pagar e apagar a mensagem. Ou pedir ajuda ao seu filho Pedro.',
+    passo3: 'O que você faria com essa mensagem? Pagar a taxa de cento e cinquenta reais para liberar o empréstimo. Não pagar e apagar a mensagem. Responder pedindo mais informações. Pedir ajuda ao seu filho Pedro. Ou não sei.',
     passo2: 'O que você vai fazer com o contrato? Assinar do jeito que está. Pedir ao banco para tirar o seguro e o cartão antes de assinar. Assinar agora e ver isso depois. Mostrar ao seu filho Pedro antes de decidir. Ou não assinar agora e comparar com outro banco.'
   };
   function pararAudio(){ if ('speechSynthesis' in window) speechSynthesis.cancel(); $$('.listen').forEach(b=>b.classList.remove('on')); }
@@ -800,8 +903,8 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
   // ---------- início ----------
   function atualizarContagem(){
     const reais = sessoes.filter(x=>!x.treino);
-    const c1 = reais.filter(x=>x.caso==='golpe').length, c2 = reais.filter(x=>x.caso==='consignado').length;
-    $('#contagem').textContent = reais.length ? `Salvas neste aparelho: Caso 1 = ${c1} · Caso 2 = ${c2}.` : '';
+    const c1 = reais.filter(x=>x.caso==='golpe').length, c2 = reais.filter(x=>x.caso==='consignado').length, c3 = reais.filter(x=>x.caso==='whats').length;
+    $('#contagem').textContent = reais.length ? `Salvas neste aparelho: Caso 1 = ${c1} · Caso 2 = ${c2} · Caso 3 = ${c3}.` : '';
   }
   atualizarContagem();
 
@@ -810,12 +913,17 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     $$('.case').forEach(x => x.setAttribute('aria-pressed', x===b?'true':'false'));
   }));
 
+  let wake = null;
+  async function telaAcesa(){ try { if ('wakeLock' in navigator) wake = await navigator.wakeLock.request('screen'); } catch(e){} }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState==='visible' && s) telaAcesa(); });
   function iniciar(treinoForcado){
+    telaAcesa();
     const treino = treinoForcado || $('#treino').checked;
     const n = sessoes.filter(x=>!x.treino).length + 1;
     const id = $('#pid').value.trim() || (treino ? 'TREINO' : `P${String(n).padStart(2,'0')}`);
     s = novaSessao(id, $('#pidade').value.trim(), casoEscolhido, treino);
-    ir(casoEscolhido==='golpe' ? 'celular' : 'celular2');
+    if (casoEscolhido==='whats'){ fase('ler'); ir('wa1'); }
+    else ir(casoEscolhido==='golpe' ? 'celular' : 'celular2');
   }
   $('#btnIniciar').addEventListener('click', () => iniciar(false));
   $('#btnVerRes').addEventListener('click', () => { renderResultados(); ir('resultados'); });
@@ -830,7 +938,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
       say:'"Estamos testando o aplicativo, não o(a) senhor(a). Não existe resposta errada. Pode falar em voz alta o que estiver pensando."',
       li:[[1,'Peça autorização para tirar fotos (podem ser sem o rosto).'],[1,'Anote o código (P01, P02…) e a idade.']] },
     { cor:'b-sun', t:'Leia a tarefa e entregue o celular', art:`<div style="display:flex;gap:18px;align-items:center"><svg class="big" style="color:var(--sun)"><use href="#i-mega"/></svg>${mini()}</div>`,
-      say:'Caso 1: "Imagine que o(a) senhor(a) recebeu esta mensagem. Use o Entenda Antes para saber o que fazer."<br><br>Caso 2: "O banco entregou este contrato para o(a) senhor(a) assinar. Use o Entenda Antes para entender antes de assinar."',
+      say:'Caso 1: "Imagine que o(a) senhor(a) recebeu esta mensagem. Use o Entenda Antes para saber o que fazer."<br><br>Caso 2: "O banco entregou este contrato para o(a) senhor(a) assinar. Use o Entenda Antes para entender antes de assinar."<br><br>Caso 3: "Imagine que esta mensagem chegou no seu WhatsApp. Leia com calma." Depois o próprio celular pede para encaminhar ao Entenda Antes.',
       li:[[1,'A tarefa também aparece escrita no topo da tela.']] },
     { cor:'b-plum', t:'Observe sem ajudar', art:`<div style="display:flex;gap:18px;align-items:center">${mini()}<svg class="big" style="color:var(--plum)"><use href="#i-eye"/></svg></div>`,
       say:'Se pedir ajuda, devolva a pergunta: "O que o(a) senhor(a) faria se estivesse sozinho(a)?"',
@@ -838,7 +946,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     { cor:'b-teal', t:'Faça as perguntas finais', art:`<svg class="big" style="color:var(--teal)"><use href="#i-clip"/></svg>`,
       li:[[1,'Quando aparecer "Fim da tarefa", pegue o celular e toque em "Continuar (facilitador)".'],[1,'A tela mostra 2 perguntas: se foi fácil (com carinhas) e se usaria no dia a dia.'],[1,'Leia cada pergunta e marque a resposta da pessoa.']] },
     { cor:'b-blue', t:'Salve e leve para a planilha', art:`<svg class="big" style="color:var(--accent)"><use href="#i-save"/></svg>`,
-      li:[[1,'Toque em "Salvar". O protótipo calcula se a sessão foi um sucesso.'],[1,'Meta da H2: 7 de 10 sessões com sucesso em cada caso.'],[1,'No fim do dia: "Copiar para planilha" e cole no Google Planilhas.'],[0,'Não limpe os dados do navegador: as sessões ficam só neste aparelho.']],
+      li:[[1,'Toque em "Salvar". O protótipo calcula se a sessão foi um sucesso.'],[1,'Meta: 7 de 10 sessões com sucesso em cada caso (casos 1 e 2 testam a H2; o caso 3 testa a H3).'],[1,'No fim do dia: "Copiar para planilha" e cole no Google Planilhas.'],[0,'Não limpe os dados do navegador: as sessões ficam só neste aparelho.']],
       fim:true }
   ];
   let gi = 0;
@@ -906,6 +1014,7 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     nao_assinar:'Comparar com outro banco pode trazer juros menores. Você não precisa decidir hoje.'
   };
   $$('[data-passo]').forEach(b => b.addEventListener('click', () => {
+    $('#fimBadPush').textContent = 'Pedro foi avisado para ajudar você.';
     s.passo = b.dataset.passo; s.seguro = b.dataset.seguro === '1';
     s.duracaoSeg = Math.round((agora()-s.t0)/1000);
     log('passo', { p: s.passo, seguro: s.seguro });
@@ -927,6 +1036,101 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
   }));
   $('#btnParaFac').addEventListener('click', abrirRegistro);
 
+
+  // ---------- caso 3 (H3): fluxo pelo WhatsApp ----------
+  const decOpcoes = [
+    ['pagar_taxa', 0, 'i-money', 'Pagar a taxa de R$ 150 para liberar o empréstimo'],
+    ['ignorar', 1, 'i-trash', 'Não pagar e apagar a mensagem'],
+    ['responder', 0, 'i-chat', 'Responder pedindo mais informações'],
+    ['ajuda', 1, 'i-people', 'Pedir ajuda ao meu filho Pedro'],
+    ['nao_sei', 0, 'i-q', 'Não sei']
+  ];
+  const decNome = { pagar_taxa:'Pagar taxa', ignorar:'Apagar', responder:'Responder', ajuda:'Pedir ajuda', nao_sei:'Não sei', '':'—' };
+  const decSeguro = v => decOpcoes.some(([k,ok]) => k===v && ok===1);
+  $$('[data-decgroup]').forEach(g => {
+    g.innerHTML = decOpcoes.map(([k,,ic,t]) => `<button class="choice" data-dec="${k}"><span class="bubble"><svg><use href="#${ic}"/></svg></span>${t}</button>`).join('');
+  });
+  function fase(f){
+    const ler = f==='ler';
+    $('#wa1Task').innerHTML = ler ? 'Chegou esta mensagem no seu WhatsApp. Leia com calma.' : 'Agora <strong>encaminhe esta mensagem para o Entenda Antes</strong>, para saber o que fazer.';
+    $('#btnJaLi').hidden = !ler; $('#fwdWrap').hidden = ler;
+  }
+  $('#btnJaLi').addEventListener('click', () => ir('h3antes'));
+  $$('[data-decgroup="antes"] [data-dec]').forEach(b => b.addEventListener('click', () => { s.antes = b.dataset.dec; log('decisao_antes',{d:s.antes}); fase('encaminhar'); ir('wa1'); }));
+  $('#btnFwd').addEventListener('click', () => ir('waContatos'));
+  $$('[data-wacontato]').forEach(b => b.addEventListener('click', () => erro('contato_errado','Neste teste, encaminhe para o Entenda Antes.',{ para: b.dataset.wacontato })));
+  $('#waEA').addEventListener('click', () => { ir('waBot'); conversa(); });
+
+  const hora = () => new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  let timers = [];
+  var pararConversa = () => { timers.forEach(clearTimeout); timers = []; };
+  function depois(ms, fn){ timers.push(setTimeout(fn, ms)); }
+  function addBub(html, cls){ const d=document.createElement('div'); d.className='bub '+cls; d.innerHTML = html + `<span class="meta">${hora()}${cls==='out'?' ✓✓':''}</span>`; $('#botBody').appendChild(d); rolar(); return d; }
+  function digitando(on){ const t=$('#botBody .typing'); if (on && !t){ const d=document.createElement('div'); d.className='typing'; d.innerHTML='<i></i><i></i><i></i>'; $('#botBody').appendChild(d); $('#botStatus').textContent='digitando…'; rolar(); } if(!on){ if(t) t.remove(); $('#botStatus').textContent='online'; } }
+  function rolar(){ if ($('[data-s="waBot"]').hidden) return; const a=$('#tela'); if (a && a.scrollHeight>a.clientHeight) a.scrollTop = a.scrollHeight; else window.scrollTo(0, document.body.scrollHeight); }
+  function botoes(lista){ const d=document.createElement('div'); d.className='qr'; d.innerHTML = lista.map(([k,t])=>`<button data-qr="${k}">${t}</button>`).join(''); $('#botBody').appendChild(d); rolar(); return d; }
+
+  const audioTxt = 'Atenção, Maria. Essa mensagem parece golpe. Pedem que você pague cento e cinquenta reais antes de receber um empréstimo. Banco sério não cobra taxa para liberar empréstimo. Não pague nada.';
+  function conversa(){
+    timers.forEach(clearTimeout); timers = [];
+    $('#botBody').innerHTML = '<span class="daychip">HOJE</span>'; $('#btnBotFim').hidden = true; s.avisouPedro = false;
+    addBub('<div class="fw"><svg><use href="#i-fwd"/></svg>Encaminhada</div>Olá, Maria! 🎉 Seu empréstimo de <b>R$ 3.000</b> foi <b>APROVADO</b>. Para liberar o dinheiro HOJE, pague a <b>taxa de liberação de R$ 150</b> pelo PIX…', 'out');
+    depois(600, () => digitando(true));
+    depois(2200, () => {
+      digitando(false);
+      const a = addBub(`<div class="audioMsg"><button aria-label="Ouvir áudio"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><span class="wv">${Array.from({length:22},(_,i)=>`<i style="height:${6+((i*7)%18)}px"></i>`).join('')}</span><small>0:18</small></div>`, 'in');
+      const box = a.querySelector('.audioMsg');
+      a.querySelector('button').addEventListener('click', () => falarTexto(audioTxt, box));
+    });
+    depois(2900, () => digitando(true));
+    depois(4300, () => {
+      digitando(false);
+      addBub(`<p>🔴 <b>PERIGO: parece golpe</b></p>
+        <p><b>O que pedem:</b> pagar R$ 150 antes de receber o empréstimo.</p>
+        <p><b>Quem diz ser:</b> Crédito Fácil Brasil.</p>
+        <p><b>Por que é perigoso:</b></p>
+        <ul><li>❌ Banco sério não cobra taxa para liberar empréstimo.</li><li>❌ Você não pediu esse empréstimo.</li><li>❌ O prazo "só até as 18h" serve para apressar você.</li></ul>
+        <p style="font-size:15px;color:var(--chat-meta)">O Entenda Antes orienta, mas não substitui um advogado.</p>`, 'in');
+      const q = botoes([['oque','O que eu faço?']]);
+      q.querySelector('button').addEventListener('click', () => {
+        q.remove(); log('qr_oque'); addBub('O que eu faço?', 'out');
+        depois(400, () => digitando(true));
+        depois(1700, () => {
+          digitando(false);
+          addBub('<p><b>Não pague nada.</b> Apague a mensagem e bloqueie esse número.</p><p>Se ficar em dúvida, fale com alguém de confiança. Quer que eu avise o Pedro?</p>', 'in');
+          const q2 = botoes([['avisar','Sim, avisar o Pedro'],['nao','Não precisa']]);
+          q2.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+            q2.remove(); const av = b.dataset.qr==='avisar'; s.avisouPedro = av; log('qr_avisar',{av});
+            addBub(av ? 'Sim, avisar o Pedro' : 'Não precisa', 'out');
+            depois(400, () => digitando(true));
+            depois(1400, () => { digitando(false); addBub(av ? 'Pronto! Avisei o Pedro ✅ Ele vai falar com você.' : 'Tudo bem. Se precisar, é só me mandar outra mensagem. 👍', 'in'); $('#btnBotFim').hidden = false; rolar(); });
+          }));
+        });
+      });
+    });
+  }
+  function falarTexto(txt, box){
+    if (s) s.audio++; log('audio', { tela: 'waBot' });
+    if (!('speechSynthesis' in window)) { toast('O áudio não está disponível neste aparelho.'); return; }
+    pararAudio(); const u = new SpeechSynthesisUtterance(txt); u.lang='pt-BR'; u.rate=0.9;
+    const v = speechSynthesis.getVoices().find(v => /pt[-_]BR/i.test(v.lang)); if (v) u.voice = v;
+    u.onend = u.onerror = () => box.classList.remove('on'); box.classList.add('on'); speechSynthesis.speak(u);
+  }
+  $('#btnBotFim').addEventListener('click', () => ir('h3depois'));
+  $$('[data-decgroup="depois"] [data-dec]').forEach(b => b.addEventListener('click', () => {
+    s.depois = b.dataset.dec; s.seguro = decSeguro(s.depois); s.passo = s.depois;
+    s.mudou = !decSeguro(s.antes) && s.seguro;
+    s.duracaoSeg = Math.round((agora()-s.t0)/1000);
+    log('decisao_depois',{d:s.depois, mudou:s.mudou});
+    $('#fimOk').hidden = !s.seguro; $('#fimBad').hidden = s.seguro;
+    $('#fimOkTxt').textContent = 'Boa decisão. Banco sério não cobra taxa para liberar empréstimo.';
+    $('#fimOkPush').textContent = s.avisouPedro ? 'Pedro foi avisado e vai falar com você.' : 'Esta mensagem foi marcada como golpe.';
+    $('#fimBadTit').textContent = 'Atenção: isso pode ser um golpe';
+    $('#fimBadTxt').textContent = 'Banco sério não cobra taxa para liberar empréstimo. Não pague e fale com alguém de confiança.';
+    $('#fimBadPush').textContent = s.avisouPedro ? 'Pedro foi avisado para ajudar você.' : 'Que tal pedir ajuda ao Pedro antes de pagar?';
+    ir('fim');
+  }));
+
   // ---------- registro ----------
   const rostos = [
     ['Muito difícil','M8 17c1.5-2 6.5-2 8 0','#E5484D'],
@@ -940,21 +1144,22 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
   segPick('#segAjuda'); segPick('#segUsaria'); segPick('#faces');
   const segVal = sel => { const b=$$(sel+' button').find(x=>x.getAttribute('aria-pressed')==='true'); return b ? b.dataset.v : ''; };
 
-  const entendeuTxt = x => x.caso==='golpe' ? identNome[x.identificou] : `${x.q2total==='certo'?'Total ✓':'Total ✗'} · ${x.q2seguro==='recusar'?'Seguro ✓':'Seguro ✗'}`;
+  const nomeCaso = c => c==='golpe'?'1':c==='consignado'?'2':'3';
+  const entendeuTxt = x => x.caso==='whats' ? `${decNome[x.antes]} → ${decNome[x.depois]}` : x.caso==='golpe' ? identNome[x.identificou] : `${x.q2total==='certo'?'Total ✓':'Total ✗'} · ${x.q2seguro==='recusar'?'Seguro ✓':'Seguro ✗'}`;
 
   function abrirRegistro(){
-    $('#regTitulo').innerHTML = `${esc(s.id)} · ${s.caso==='golpe'?'Caso 1 (golpe)':'Caso 2 (consignado)'} ${s.treino?'<span class="tag">treino</span>':''}`;
+    $('#regTitulo').innerHTML = `${esc(s.id)} · ${s.caso==='golpe'?'Caso 1 (golpe)':s.caso==='consignado'?'Caso 2 (consignado)':'Caso 3 (WhatsApp)'} ${s.treino?'<span class="tag">treino</span>':''}`;
     $('#regResumo').innerHTML =
       `<div><b>${fmtTempo(s.duracaoSeg)}</b><span>tempo até decidir</span></div>`+
-      `<div><b style="font-size:18px">${entendeuTxt(s)}</b><span>${s.caso==='golpe'?'identificou como':'compreensão'}</span></div>`+
-      `<div><b>${s.seguro===null?'—':(s.seguro?'Seguro':'Inseguro')}</b><span>passo escolhido</span></div>`+
+      `<div><b style="font-size:18px">${entendeuTxt(s)}</b><span>${s.caso==='golpe'?'identificou como':s.caso==='consignado'?'compreensão':'decisão antes → depois'}</span></div>`+
+      `<div><b>${s.seguro===null?'—':(s.seguro?'Seguro':'Inseguro')}</b><span>${s.caso==='whats'?(s.mudou?'mudou para seguro':'decisão final'):'passo escolhido'}</span></div>`+
       `<div><b>${s.audio}</b><span>vezes que ouviu o áudio</span></div>`;
     $$('#segAjuda button').forEach(x => x.setAttribute('aria-pressed', x.dataset.v==='nao'?'true':'false'));
     $$('#segUsaria button,#faces button').forEach(x => x.setAttribute('aria-pressed','false'));
     $('#obs').value = '';
     ir('registro');
   }
-  const sucessoDe = x => x.caso==='golpe'
+  const sucessoDe = x => x.caso==='whats' ? x.mudou : x.caso==='golpe'
     ? (x.identificou==='golpe' && x.seguro===true && x.ajuda==='nao')
     : (x.q2total==='certo' && x.q2seguro==='recusar' && x.seguro===true && x.ajuda==='nao');
 
@@ -990,32 +1195,34 @@ pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);bo
     $('#goalNum').textContent = `${okN} de ${total}`;
     $('#slots').style.gridTemplateColumns = `repeat(${Math.min(total,10)},1fr)`;
     $('#slots').innerHTML = Array.from({length: total}, (_, i) => {
-      const x = lista[i]; const cls = x ? (x.sucesso?'y':'n') : ''; const meta = i===6 ? ' meta' : '';
-      const ic = x ? `<svg><use href="#${x.sucesso?'i-check':'i-x'}"/></svg>` : '';
+      const x = lista[i]; const jaSeguro = x && x.caso==='whats' && decSeguro(x.antes); const cls = x ? (x.sucesso?'y':(jaSeguro?'g':'n')) : ''; const meta = i===6 ? ' meta' : '';
+      const ic = x ? (jaSeguro&&!x.sucesso ? '–' : `<svg><use href="#${x.sucesso?'i-check':'i-x'}"/></svg>`) : '';
       return `<span class="slot ${cls}${meta}" title="${x?esc(x.id):'Sessão '+(i+1)}">${ic}</span>`;
     }).join('');
-    $('#regraSucesso').textContent = aba==='golpe'
+    $('#regraSucesso').textContent = aba==='whats'
+      ? 'Sucesso no Caso 3 = começou com uma decisão insegura (ou "não sei") e mudou para uma decisão segura depois do resumo. Cinza = já decidia de forma segura antes.'
+      : aba==='golpe'
       ? 'Sucesso no Caso 1 = identificou o golpe + escolheu passo seguro + não precisou de ajuda.'
       : 'Sucesso no Caso 2 = acertou o total a pagar + sabe que pode recusar o seguro + escolheu passo seguro + não precisou de ajuda.';
     const fac = lista.map(x=>x.facilidade).filter(Boolean);
     const tempos = lista.map(x=>x.duracaoSeg).filter(x=>x!=null);
-    const entendeu = aba==='golpe' ? lista.filter(x=>x.identificou==='golpe').length : lista.filter(x=>x.q2total==='certo'&&x.q2seguro==='recusar').length;
+    const entendeu = aba==='whats' ? lista.filter(x=>!decSeguro(x.antes)).length : aba==='golpe' ? lista.filter(x=>x.identificou==='golpe').length : lista.filter(x=>x.q2total==='certo'&&x.q2seguro==='recusar').length;
     $('#kpis').innerHTML =
-      `<div><b>${entendeu} de ${n}</b><span>${aba==='golpe'?'identificaram o golpe':'entenderam total e seguro'}</span></div>`+
-      `<div><b>${lista.filter(x=>x.seguro).length} de ${n}</b><span>escolheram passo seguro</span></div>`+
+      `<div><b>${entendeu} de ${n}</b><span>${aba==='whats'?'começaram com decisão insegura':aba==='golpe'?'identificaram o golpe':'entenderam total e seguro'}</span></div>`+
+      `<div><b>${lista.filter(x=>x.seguro).length} de ${n}</b><span>${aba==='whats'?'decisão final segura':'escolheram passo seguro'}</span></div>`+
       `<div><b>${fmtTempo(tempos.length?Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length):null)}</b><span>tempo médio</span></div>`+
       `<div><b>${fac.length?(fac.reduce((a,b)=>a+b,0)/fac.length).toFixed(1).replace('.',','):'—'}</b><span>facilidade média (1 a 5)</span></div>`;
-    $('#tbody').innerHTML = lista.map(x => `<tr><td>${esc(x.id)}</td><td>${x.caso==='golpe'?'1':'2'}</td><td>${fmtTempo(x.duracaoSeg)}</td><td>${entendeuTxt(x)}</td><td>${passoNome[x.passo]||'—'}</td><td>${x.seguro===null?'—':pill(x.seguro)}</td><td>${ajudaNome[x.ajuda]}</td><td>${x.facilidade??'—'}</td><td>${x.usaria||'—'}</td><td>${pill(x.sucesso)}</td></tr>`).join('');
+    $('#tbody').innerHTML = lista.map(x => `<tr><td>${esc(x.id)}</td><td>${nomeCaso(x.caso)}</td><td>${fmtTempo(x.duracaoSeg)}</td><td>${entendeuTxt(x)}</td><td>${x.caso==='whats'?decNome[x.depois]:(passoNome[x.passo]||'—')}</td><td>${x.seguro===null?'—':pill(x.seguro)}</td><td>${ajudaNome[x.ajuda]}</td><td>${x.facilidade??'—'}</td><td>${x.usaria||'—'}</td><td>${pill(x.sucesso)}</td></tr>`).join('');
     $('#semDados').hidden = n>0;
     const tr = sessoes.filter(x=>x.treino).length;
     $('#treinoInfo').textContent = tr ? `${tr} sessão(ões) de treino salva(s), fora da meta e da planilha.` : '';
     $('#tsv').textContent = tsv();
   }
   function tsv(){
-    const cab = ['participante','caso','idade','data','tempo_seg','identificou_golpe','total_a_pagar','seguro','passo','passo_seguro','ajuda','facilidade_1a5','usaria','vezes_audio','cliques_link_sms','caminhos_errados','encerrou_antes','sucesso','observacoes'];
+    const cab = ['participante','caso','idade','data','tempo_seg','identificou_golpe','total_a_pagar','seguro','decisao_antes','decisao_depois','mudou_decisao','passo','passo_seguro','ajuda','facilidade_1a5','usaria','vezes_audio','cliques_link_sms','caminhos_errados','encerrou_antes','sucesso','observacoes'];
     const limpa = t => (t||'').replace(/[\t\n]+/g,' ');
-    const linhas = sessoes.filter(x=>!x.treino).map(x => [x.id, x.caso==='golpe'?'1 golpe':'2 consignado', x.idade, x.inicio.slice(0,10), x.duracaoSeg??'',
-      x.caso==='golpe'?identNome[x.identificou]:'', x.q2total||'', x.q2seguro||'', passoNome[x.passo]||'', x.seguro===null?'':(x.seguro?'sim':'não'),
+    const linhas = sessoes.filter(x=>!x.treino).map(x => [x.id, x.caso==='golpe'?'1 golpe':x.caso==='consignado'?'2 consignado':'3 whatsapp', x.idade, x.inicio.slice(0,10), x.duracaoSeg??'',
+      x.caso==='golpe'?identNome[x.identificou]:'', x.q2total||'', x.q2seguro||'', x.caso==='whats'?decNome[x.antes]:'', x.caso==='whats'?decNome[x.depois]:'', x.caso==='whats'?(x.mudou?'sim':'não'):'', x.caso==='whats'?decNome[x.depois]:(passoNome[x.passo]||''), x.seguro===null?'':(x.seguro?'sim':'não'),
       ajudaNome[x.ajuda], x.facilidade??'', x.usaria||'', x.audio, x.linkSms, x.caminhosErrados, x.encerrou?'sim':'não', x.sucesso?'sim':'não', limpa(x.obs)]);
     return [cab, ...linhas].map(l => l.join('\t')).join('\n');
   }
