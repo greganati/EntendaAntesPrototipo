@@ -1,0 +1,1038 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Entenda Antes · Teste H2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: app de celular em uma coluna. No computador, o app aparece dentro de uma moldura de celular; no celular, ocupa a tela toda.
+   Identidade: azul do Entenda Antes + ilustrações em círculos coloridos; semáforo como elemento-assinatura. */
+:root{
+  --bg:#E6EEF5; --stage:#D7E3EE; --surface:#FFFFFF; --surface-2:#F3F7FB; --ink:#0F1B2D; --muted:#4A5A70; --line:#D3DEEA;
+  --accent:#0369A1; --accent-ink:#FFFFFF; --accent-soft:#E0F0FA;
+  --teal:#0E7C70; --teal-soft:#DDF3EF; --sun:#B4690E; --sun-soft:#FDF0DC; --plum:#6941C6; --plum-soft:#EFE9FB;
+  --red:#B42318; --red-soft:#FDECEA; --amber:#B54708; --amber-soft:#FEF4E6; --green:#17663A; --green-soft:#E3F5EA;
+  --fac:#F7F9FB; --fac-ink:#334155; --shadow:0 10px 30px rgb(15 27 45 / .10);
+  --f-app:"Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  --r:20px;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#08111C; --stage:#0B1624; --surface:#132235; --surface-2:#0F1C2C; --ink:#F2F6FA; --muted:#A9B8CA; --line:#26394F;
+  --accent:#38A9E8; --accent-ink:#06121F; --accent-soft:#11314A;
+  --teal:#4FD1BE; --teal-soft:#0F3330; --sun:#F7B955; --sun-soft:#3A2A10; --plum:#B9A2F5; --plum-soft:#2A2145;
+  --red:#FF8A80; --red-soft:#3A1715; --amber:#FDB022; --amber-soft:#3A2810; --green:#6CD99A; --green-soft:#0F3221;
+  --fac:#101C2B; --fac-ink:#C9D5E2; --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#08111C; --stage:#0B1624; --surface:#132235; --surface-2:#0F1C2C; --ink:#F2F6FA; --muted:#A9B8CA; --line:#26394F;
+  --accent:#38A9E8; --accent-ink:#06121F; --accent-soft:#11314A;
+  --teal:#4FD1BE; --teal-soft:#0F3330; --sun:#F7B955; --sun-soft:#3A2A10; --plum:#B9A2F5; --plum-soft:#2A2145;
+  --red:#FF8A80; --red-soft:#3A1715; --amber:#FDB022; --amber-soft:#3A2810; --green:#6CD99A; --green-soft:#0F3221;
+  --fac:#101C2B; --fac-ink:#C9D5E2; --shadow:0 10px 30px rgb(0 0 0 / .35); color-scheme:dark }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-app);font-size:20px;line-height:1.45;padding-inline:16px;padding-block:16px 32px}
+h1,h2,h3{margin:0;text-wrap:balance;line-height:1.2}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+svg{display:block}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- moldura de celular (só no computador) ---------- */
+.device{max-width:430px;margin:0 auto}
+.screenArea{display:flex;flex-direction:column}
+@media (min-width:560px){
+  body{padding-block:28px}
+  .device{background:#0E1622;border-radius:52px;padding:14px;box-shadow:0 30px 80px rgb(15 27 45 / .28), inset 0 0 0 2px #2B3647}
+  .screenArea{background:var(--bg);border-radius:40px;height:min(860px, calc(100vh - 84px));overflow-y:auto;overflow-x:hidden;position:relative}
+  .notch{display:block!important}
+}
+.notch{display:none;position:sticky;top:0;z-index:3;height:0}
+.notch::before{content:"";position:absolute;left:50%;top:10px;transform:translateX(-50%);width:110px;height:30px;border-radius:20px;background:#0E1622}
+
+.screen{display:flex;flex-direction:column;gap:18px;padding:18px 18px 28px}
+@media (max-width:559px){ .screen{padding:4px 0 20px} }
+@media (min-width:560px){ .screen{padding-top:54px} }
+
+/* barra de status do celular */
+.status{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;padding:6px 8px 0;font-variant-numeric:tabular-nums}
+.status .ico{display:flex;gap:6px;align-items:center}
+.status svg{width:18px;height:18px}
+
+/* ---------- elementos do app ---------- */
+.appbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:21px}
+.logo{width:40px;height:40px;border-radius:12px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;flex:none}
+.logo svg{width:24px;height:24px}
+.ghost{background:none;border:0;color:var(--muted);font-size:14px;padding:8px;text-decoration:underline}
+
+.hero{border-radius:26px;padding:22px;background:linear-gradient(140deg,#0369A1 0%,#0E7C70 100%);color:#fff;display:flex;gap:14px;align-items:center;justify-content:space-between;box-shadow:var(--shadow)}
+.hero h1{font-size:30px}
+.hero p{font-size:19px;opacity:.92;margin-top:6px}
+.hero svg{width:96px;height:96px;flex:none}
+
+.tile{display:flex;align-items:center;gap:16px;width:100%;min-height:96px;padding:18px;border-radius:var(--r);border:0;background:var(--surface);text-align:left;font-size:22px;font-weight:700;box-shadow:var(--shadow)}
+.tile small{display:block;font-weight:400;font-size:17px;color:var(--muted);margin-top:2px}
+.tile .chev{margin-left:auto;width:26px;height:26px;stroke:var(--muted);flex:none}
+.bubble{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;flex:none}
+.bubble svg{width:30px;height:30px}
+.b-sun{background:var(--sun-soft);color:var(--sun)} .b-teal{background:var(--teal-soft);color:var(--teal)}
+.b-blue{background:var(--accent-soft);color:var(--accent)} .b-plum{background:var(--plum-soft);color:var(--plum)}
+.b-red{background:var(--red-soft);color:var(--red)}
+
+.primary{width:100%;min-height:70px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);font-size:24px;font-weight:700;padding:12px 24px;box-shadow:0 8px 20px rgb(3 105 161 / .30);display:flex;align-items:center;justify-content:center;gap:10px}
+.primary svg{width:26px;height:26px}
+.listen{align-self:stretch;min-height:60px;border-radius:999px;border:2px solid var(--accent);background:var(--surface);color:var(--accent);font-size:21px;font-weight:700;padding:10px 18px;display:flex;align-items:center;justify-content:center;gap:12px}
+.listen .wave{display:flex;gap:3px;align-items:center;height:22px}
+.listen .wave i{width:4px;border-radius:2px;background:currentColor;height:8px}
+.listen .wave i:nth-child(2){height:18px}.listen .wave i:nth-child(3){height:12px}.listen .wave i:nth-child(4){height:20px}
+.listen.on .wave i{animation:eq .8s infinite ease-in-out}
+.listen.on .wave i:nth-child(2){animation-delay:.1s}.listen.on .wave i:nth-child(3){animation-delay:.2s}.listen.on .wave i:nth-child(4){animation-delay:.3s}
+@keyframes eq{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+.back{align-self:flex-start;background:none;border:0;color:var(--accent);font-size:20px;font-weight:700;padding:6px 0;display:flex;gap:6px;align-items:center}
+.back svg{width:24px;height:24px}
+.title{font-size:28px}
+
+/* ---------- tela de bloqueio ---------- */
+.task{background:var(--surface);border-radius:var(--r);padding:16px 18px;font-size:19px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+.task b.k{display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+.task .bubble{width:48px;height:48px}.task .bubble svg{width:24px;height:24px}
+.lock{border-radius:30px;padding:16px 16px 18px;color:#fff;display:flex;flex-direction:column;gap:14px;
+  background:radial-gradient(120% 80% at 10% 0%,#3BB2D6 0%,transparent 60%),radial-gradient(90% 70% at 100% 100%,#0E7C70 0%,transparent 65%),linear-gradient(160deg,#0B3A5E,#0369A1)}
+.lock .status{color:#fff}
+.clock{text-align:center;font-size:64px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.01em;line-height:1;margin-top:8px}
+.date{text-align:center;font-size:18px;opacity:.9;margin-top:-6px}
+.notif{background:rgb(255 255 255 / .93);color:#0F1B2D;border-radius:20px;padding:14px 16px;box-shadow:0 8px 24px rgb(0 0 0 / .18);animation:drop .5s ease-out both}
+@keyframes drop{from{transform:translateY(-12px);opacity:0}to{transform:none;opacity:1}}
+.notif .from{display:flex;align-items:center;gap:8px;font-size:15px;color:#4A5A70}
+.notif .from .sms{width:24px;height:24px;border-radius:7px;background:#22A06B;display:grid;place-items:center}
+.notif .from .sms svg{width:15px;height:15px;stroke:#fff}
+.notif .from b{color:#0F1B2D}.notif .from span:last-child{margin-left:auto}
+.notif p{font-size:19px;margin-top:6px}
+.link{color:#0369A1;text-decoration:underline;background:none;border:0;padding:0;font-size:inherit;font-family:inherit;word-break:break-all}
+.dock{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:rgb(255 255 255 / .22);border-radius:24px;padding:12px 8px 10px;margin-top:6px}
+.app{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;font-size:13px;color:#fff}
+.app .ic{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;background:#fff}
+.app .ic svg{width:30px;height:30px}
+.app.ea{font-weight:700}
+.app.ea .ic{background:#fff;box-shadow:0 0 0 4px #FDE68A;animation:glow 1.8s infinite ease-in-out}
+@keyframes glow{0%,100%{box-shadow:0 0 0 3px #FDE68A}50%{box-shadow:0 0 0 7px rgb(253 230 138 / .55)}}
+
+/* ---------- lista de mensagens ---------- */
+.msg{display:flex;gap:14px;align-items:center;width:100%;text-align:left;padding:16px;border-radius:var(--r);border:0;background:var(--surface);box-shadow:var(--shadow)}
+.avatar{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:20px;flex:none}
+.msg .body{min-width:0;display:flex;flex-direction:column;gap:2px}
+.msg .who{font-weight:700;font-size:20px;display:flex;justify-content:space-between;gap:8px}
+.msg .who span{font-weight:400;font-size:15px;color:var(--muted)}
+.msg .txt{color:var(--muted);font-size:18px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sms-bubble{align-self:flex-start;max-width:92%;background:var(--surface);border-radius:22px 22px 22px 6px;padding:16px 18px;font-size:20px;box-shadow:var(--shadow)}
+.sms-bubble .who{font-size:15px;color:var(--muted);margin-bottom:6px;font-weight:700}
+.center-art{display:grid;place-items:center;padding:6px 0}
+.center-art svg{width:150px;height:150px}
+
+/* ---------- analisando ---------- */
+.loading{display:flex;flex-direction:column;align-items:center;gap:22px;padding:40px 0;text-align:center}
+.scan{position:relative;width:150px;height:180px}
+.scan .bar{position:absolute;left:8px;right:8px;height:6px;border-radius:3px;background:var(--accent);box-shadow:0 0 16px var(--accent);animation:scan 1.6s infinite ease-in-out}
+@keyframes scan{0%{top:20px}50%{top:150px}100%{top:20px}}
+
+/* ---------- resultado ---------- */
+.verdict{border-radius:26px;background:var(--red-soft);padding:20px;display:flex;gap:18px;align-items:center;box-shadow:var(--shadow)}
+.verdict .k{font-size:14px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--red)}
+.verdict h2{font-size:36px;color:var(--red);line-height:1}
+.verdict p{font-size:20px;font-weight:700;margin-top:8px}
+.light svg{width:64px;height:150px}
+.light .glow{animation:pulseRed 1.6s infinite ease-in-out}
+@keyframes pulseRed{0%,100%{opacity:.55}50%{opacity:1}}
+.facts{display:flex;flex-direction:column;gap:12px}
+.fact{background:var(--surface);border-radius:var(--r);padding:16px;display:flex;gap:14px;align-items:flex-start;box-shadow:var(--shadow)}
+.fact .bubble{width:52px;height:52px}.fact .bubble svg{width:26px;height:26px}
+.fact .k{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.fact .v{font-size:21px;margin-top:2px}
+.fact ul{margin:6px 0 0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.fact li{display:flex;gap:10px;align-items:flex-start}
+.fact li svg{width:22px;height:22px;stroke:var(--red);flex:none;margin-top:3px}
+.note{font-size:16px;color:var(--muted);text-align:center}
+
+/* ---------- escolhas (cores neutras de propósito) ---------- */
+.choice{display:flex;align-items:center;gap:14px;width:100%;min-height:80px;text-align:left;padding:14px 16px;border-radius:var(--r);border:0;background:var(--surface);font-size:21px;font-weight:700;box-shadow:var(--shadow)}
+.choice .bubble{width:50px;height:50px;background:var(--accent-soft);color:var(--accent)}
+.choice .bubble svg{width:26px;height:26px}
+
+/* ---------- fim ---------- */
+.end{border-radius:26px;padding:26px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;box-shadow:var(--shadow)}
+.end .badge{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;animation:pop .5s ease-out both}
+.end .badge svg{width:60px;height:60px}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.end.ok{background:var(--green-soft)} .end.ok .badge{background:var(--green);color:var(--surface)} .end.ok h2{color:var(--green)}
+.end.bad{background:var(--amber-soft)} .end.bad .badge{background:var(--amber);color:var(--surface)} .end.bad h2{color:var(--amber)}
+.end h2{font-size:30px}
+.push{align-self:stretch;display:flex;gap:12px;align-items:center;background:var(--surface);border-radius:18px;padding:12px 14px;font-size:17px;text-align:left}
+.push .logo{width:36px;height:36px;border-radius:10px}.push .logo svg{width:20px;height:20px}
+.push small{display:block;color:var(--muted);font-size:13px}
+.handoff{background:var(--surface);border-radius:var(--r);padding:16px 18px;font-size:19px;display:flex;gap:14px;align-items:center;box-shadow:var(--shadow)}
+
+/* ---------- facilitador ---------- */
+.fac{background:var(--fac);color:var(--fac-ink);border:1px dashed var(--line);border-radius:18px;padding:18px;font-size:16px;display:flex;flex-direction:column;gap:14px}
+.fac h2{font-size:22px;color:var(--ink)}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;display:flex;align-items:center;gap:6px}
+.eyebrow svg{width:16px;height:16px}
+.fac label{display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:15px}
+.fac input,.fac textarea{font:inherit;font-weight:400;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.fac textarea{min-height:80px;resize:vertical}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:9px 14px;font-size:15px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.fbtn{border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:700;padding:12px 16px;font-size:16px}
+.fbtn.alt{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.fbtn.warn{background:transparent;color:var(--red);border:1px solid var(--red)}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.cover{border-radius:18px;overflow:hidden;background:linear-gradient(140deg,#0369A1,#0E7C70);color:#fff;padding:18px;display:flex;gap:14px;align-items:center}
+.cover svg{width:64px;height:64px;flex:none}
+.cover b{font-size:20px;display:block}
+.cover span{font-size:15px;opacity:.9}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi div{background:var(--surface);border-radius:14px;padding:12px}
+.kpi b{display:block;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums}
+.kpi span{font-size:13px}
+.goal{background:var(--surface);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.goal .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.goal .top b{font-size:28px;color:var(--ink);font-variant-numeric:tabular-nums}
+.slots{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;position:relative}
+.slot{aspect-ratio:1;border-radius:50%;background:var(--surface-2);border:2px dashed var(--muted);display:grid;place-items:center}
+.slot svg{width:60%;height:60%;stroke:currentColor}
+.slot.y{background:var(--green);border:0;color:var(--surface)} .slot.n{background:var(--red);border:0;color:var(--surface)}
+.slot.meta{outline:3px solid var(--accent);outline-offset:2px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{color:var(--muted);font-weight:700}
+.pill{display:inline-block;padding:2px 8px;border-radius:999px;font-weight:700;font-size:12px}
+.pill.y{background:var(--green-soft);color:var(--green)}.pill.n{background:var(--red-soft);color:var(--red)}
+.empty{color:var(--muted);font-size:14px}
+pre.tsv{font-size:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px;overflow:auto;max-height:150px;white-space:pre;margin:0}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:14px;font-size:17px;max-width:min(92vw,400px);text-align:center;z-index:9;box-shadow:var(--shadow)}
+
+/* ---------- escolha do caso (facilitador) ---------- */
+.cases{display:flex;flex-direction:column;gap:10px}
+.case{display:flex;gap:12px;align-items:center;width:100%;text-align:left;padding:12px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-size:16px}
+.case[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.case .bubble{width:46px;height:46px}.case .bubble svg{width:24px;height:24px}
+.case b{display:block;font-size:16px;color:var(--ink)}
+.case small{font-size:14px;color:var(--muted)}
+.case .radio{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center}
+.case[aria-pressed="true"] .radio{border-color:var(--accent)}
+.case[aria-pressed="true"] .radio::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--accent)}
+.guideLink{display:flex;gap:12px;align-items:center;width:100%;text-align:left;border:0;border-radius:16px;padding:14px;background:var(--sun-soft);color:var(--ink);font-size:16px}
+.guideLink .bubble{width:46px;height:46px;background:var(--surface);color:var(--sun)}
+.guideLink .bubble svg{width:24px;height:24px}
+.guideLink b{display:block;font-size:17px}
+.guideLink small{color:var(--muted);font-size:14px}
+.guideLink .chev{margin-left:auto;width:22px;height:22px;stroke:var(--sun);flex:none}
+.check{display:flex;gap:10px;align-items:center;font-weight:400!important;flex-direction:row!important}
+.check input{width:22px;height:22px;accent-color:var(--accent)}
+
+/* ---------- guia rápido ---------- */
+.guide{display:flex;flex-direction:column;gap:16px}
+.gprog{display:flex;gap:6px}
+.gprog i{flex:1;height:6px;border-radius:3px;background:var(--line)}
+.gprog i.on{background:var(--accent)}
+.gcard{background:var(--surface);border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow);font-size:17px}
+.gart{border-radius:18px;height:150px;display:grid;place-items:center;position:relative;overflow:hidden}
+.gart svg.big{width:72px;height:72px}
+.gstep{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--accent)}
+.gcard h2{font-size:24px}
+.gcard ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.gcard li{display:flex;gap:10px;align-items:flex-start}
+.gcard li svg{width:20px;height:20px;flex:none;margin-top:3px;stroke:var(--green);color:var(--green)}
+.gcard li.no svg{stroke:var(--red);color:var(--red)}
+.say{background:var(--accent-soft);border-radius:14px;padding:12px 14px;font-size:17px}
+.say b{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+.gnav{display:flex;gap:10px;justify-content:space-between}
+.gnav .fbtn{flex:1}
+.mini{width:84px;height:150px;border-radius:16px;background:#0E1622;padding:5px;box-shadow:0 8px 20px rgb(0 0 0 / .2)}
+.mini > div{width:100%;height:100%;border-radius:12px;background:#F3F7FB;display:flex;flex-direction:column;gap:5px;padding:8px 6px}
+.mini .ln{height:8px;border-radius:4px;background:#C9D5E2}
+.mini .rd{height:34px;border-radius:8px;background:#FDECEA;display:flex;align-items:center;gap:4px;padding:0 5px}
+.mini .rd i{width:10px;height:10px;border-radius:50%;background:#E5484D}
+.mini .bt{height:16px;border-radius:8px;background:#0369A1;margin-top:auto}
+.hand{position:absolute;right:26%;bottom:10px;width:46px;height:46px}
+.eye{position:absolute;left:22%;top:22px}
+
+/* ---------- caso 2: contrato em papel ---------- */
+.paper{background:#FFFDF8;color:#2B2B2B;border-radius:6px;padding:16px 16px 18px;box-shadow:0 10px 24px rgb(0 0 0 / .18);font-family:Georgia,"Times New Roman",serif;transform:rotate(-1.2deg)}
+.paper h3{font-size:14px;letter-spacing:.06em;text-transform:uppercase;text-align:center;font-family:inherit}
+.paper .bank{font-size:12px;text-align:center;color:#6B6B6B;margin:2px 0 10px}
+.paper p{font-size:11.5px;line-height:1.45;margin:0 0 6px;text-align:justify}
+.paper .sig{display:flex;justify-content:space-between;gap:12px;margin-top:12px;font-size:11px;color:#6B6B6B}
+.paper .sig span{flex:1;border-top:1px solid #9A9A9A;padding-top:4px;text-align:center}
+.phonebar{background:linear-gradient(160deg,#0B3A5E,#0369A1);border-radius:24px;padding:12px 10px 10px}
+.phonebar .lbl{color:#fff;font-size:14px;opacity:.9;padding:0 6px 8px}
+.viewfinder{position:relative;background:#0B0F14;border-radius:24px;padding:26px 20px 52px;overflow:hidden}
+.viewfinder .corner{position:absolute;width:34px;height:34px;border:4px solid #FDE68A}
+.viewfinder .tl{top:12px;left:12px;border-right:0;border-bottom:0;border-radius:8px 0 0 0}
+.viewfinder .tr{top:12px;right:12px;border-left:0;border-bottom:0;border-radius:0 8px 0 0}
+.viewfinder .bl{bottom:12px;left:12px;border-right:0;border-top:0;border-radius:0 0 0 8px}
+.viewfinder .br{bottom:12px;right:12px;border-left:0;border-top:0;border-radius:0 0 8px 0}
+.viewfinder .paper{transform:rotate(-2.5deg) scale(.96)}
+.vf-hint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);background:rgb(0 0 0 / .55);color:#fff;font-size:15px;padding:4px 12px;border-radius:999px;white-space:nowrap}
+.shutterRow{display:flex;flex-direction:column;align-items:center;gap:8px}
+.shutter{width:86px;height:86px;border-radius:50%;border:6px solid var(--accent);background:var(--surface);display:grid;place-items:center}
+.shutter i{width:62px;height:62px;border-radius:50%;background:var(--accent)}
+.flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:8}
+.flash.go{animation:flash .45s ease-out}
+@keyframes flash{0%{opacity:.95}100%{opacity:0}}
+
+/* ---------- caso 2: resultado ---------- */
+.verdict.amber{background:var(--amber-soft)}
+.verdict.amber .k,.verdict.amber h2{color:var(--amber)}
+.light .glowA{animation:pulseRed 1.6s infinite ease-in-out}
+.money{background:var(--surface);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.money .k{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.bars{display:flex;flex-direction:column;gap:10px}
+.barrow{display:flex;flex-direction:column;gap:4px}
+.barrow .lab{display:flex;justify-content:space-between;gap:8px;font-size:18px}
+.barrow .lab b{font-variant-numeric:tabular-nums}
+.track{height:22px;border-radius:11px;background:var(--surface-2);overflow:hidden}
+.fill{height:100%;border-radius:11px}
+.fill.recv{background:var(--teal);width:39%}
+.fill.pay{background:var(--amber);width:100%}
+.money .sub{font-size:18px}
+.points{background:var(--surface);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.points .k{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.pt{display:flex;gap:12px;align-items:flex-start;font-size:19px}
+.dot{width:22px;height:22px;border-radius:50%;flex:none;margin-top:3px;box-shadow:inset 0 0 0 3px rgb(255 255 255 / .35)}
+.dot.r{background:#E5484D}.dot.y{background:#F5A524}.dot.g{background:#2EA36B}
+.pt small{display:block;font-size:16px;color:var(--muted);margin-top:2px}
+.keyline{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.keyline span{display:flex;align-items:center;gap:6px}
+.keyline .dot{width:14px;height:14px;margin:0;box-shadow:none}
+
+/* ---------- registro: perguntas finais ---------- */
+.faces{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.faces button{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px}
+.faces button svg{width:30px;height:30px}
+.faces button[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.qblock{display:flex;flex-direction:column;gap:8px}
+.qblock > p{font-weight:700;font-size:15px}
+.qblock .hint{font-weight:400;font-size:13px;color:var(--muted)}
+.tabs{display:flex;gap:6px;background:var(--surface);border-radius:12px;padding:4px}
+.tabs button{flex:1;border:0;background:none;border-radius:9px;padding:9px 6px;font-size:14px;font-weight:700;color:var(--muted)}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 6px;border-radius:6px;background:var(--sun-soft);color:var(--sun)}
+</style>
+</head>
+<body>
+
+
+<!-- ícones reutilizados -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18M12 3l9 5H3z"/></symbol>
+    <symbol id="i-money" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></symbol>
+    <symbol id="i-id" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="11" r="2.5"/><path d="M5.5 17c.8-1.7 2-2.5 3.5-2.5s2.7.8 3.5 2.5M15 10h3M15 14h3"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2 21c.8-3.5 3.6-5.5 7-5.5s6.2 2 7 5.5"/><circle cx="17.5" cy="9" r="2.5"/><path d="M17 14.5c2.4.2 4.2 1.8 5 4.5"/></symbol>
+    <symbol id="i-q" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4M4 4h13l-2 4 2 4H4"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V2h6v2M9 11h6M9 15h4"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-mega" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1zM16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></symbol>
+    <symbol id="i-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 10v4M10 10v4M14 10v4"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-6-2.4l-3.6-3.6a2 2 0 0 1 2.8-2.8L6 14"/></symbol>
+  </defs>
+</svg>
+
+<div class="device"><div class="screenArea" id="tela"><div class="notch"></div>
+
+  <!-- ============ FACILITADOR: início ============ -->
+  <section class="screen" data-s="inicio">
+    <div class="cover">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4l22 8v16c0 15-9.5 26-22 32C19.5 54 10 43 10 28V12z" fill="#fff" opacity=".95"/><path d="M22 32l7 7 14-15" fill="none" stroke="#0E7C70" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><b>Entenda Antes</b><span>Protótipo para o teste da H2 · Maria entende sozinha</span></div>
+    </div>
+    <button class="guideLink" id="btnGuia"><span class="bubble"><svg><use href="#i-book"/></svg></span><span><b>Primeira vez? Veja como funciona o teste</b><small>Guia rápido e visual · 6 passos, 2 minutos</small></span><svg class="chev"><use href="#i-chev"/></svg></button>
+    <div class="fac">
+      <span class="eyebrow"><svg><use href="#i-clip"/></svg>Modo facilitador</span>
+      <h2>Nova sessão</h2>
+      <div class="qblock">
+        <p>Qual caso vai ser testado?</p>
+        <div class="cases" role="radiogroup" aria-label="Caso de teste">
+          <button class="case" data-caso="golpe" aria-pressed="true"><span class="bubble b-red"><svg><use href="#i-chat"/></svg></span><span><b>Caso 1 · Mensagem de golpe</b><small>SMS falso do INSS pedindo PIX</small></span><span class="radio"></span></button>
+          <button class="case" data-caso="consignado" aria-pressed="false"><span class="bubble b-sun"><svg><use href="#i-doc"/></svg></span><span><b>Caso 2 · Contrato de consignado</b><small>Foto do papel e as cláusulas importantes</small></span><span class="radio"></span></button>
+        </div>
+      </div>
+      <label for="pid">Código do participante
+        <input id="pid" placeholder="Ex.: P01" autocomplete="off">
+      </label>
+      <label for="pidade">Idade (opcional)
+        <input id="pidade" inputmode="numeric" placeholder="Ex.: 72" autocomplete="off">
+      </label>
+      <label class="check" for="treino"><input type="checkbox" id="treino"> Sessão de treino (não entra nos resultados)</label>
+      <div class="row">
+        <button class="fbtn" id="btnIniciar">Iniciar sessão</button>
+        <button class="fbtn alt" id="btnVerRes">Ver resultados</button>
+      </div>
+      <p class="empty" id="contagem"></p>
+    </div>
+  </section>
+
+  <!-- ============ FACILITADOR: guia rápido ============ -->
+  <section class="screen" data-s="guia" hidden>
+    <button class="back" id="guiaVoltar"><svg><use href="#i-back"/></svg>Voltar</button>
+    <div class="guide">
+      <div class="gprog" id="gprog"></div>
+      <div class="gcard" id="gcard"></div>
+      <div class="gnav">
+        <button class="fbtn alt" id="gAnt">Anterior</button>
+        <button class="fbtn" id="gProx">Próximo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASO 1: tela de bloqueio com o SMS ============ -->
+  <section class="screen" data-s="celular" hidden>
+    <div class="task"><span class="bubble b-sun"><svg><use href="#i-flag"/></svg></span><div><b class="k">Sua tarefa</b>Você recebeu a mensagem abaixo. Use o aplicativo <strong>Entenda Antes</strong> para saber o que fazer.</div></div>
+    <div class="lock">
+      <div class="status"><span class="relogioMini">10:41</span><span class="ico"><svg viewBox="0 0 24 24" fill="#fff"><rect x="2" y="15" width="3" height="6" rx="1"/><rect x="7" y="11" width="3" height="10" rx="1"/><rect x="12" y="7" width="3" height="14" rx="1"/><rect x="17" y="3" width="3" height="18" rx="1"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="7" width="18" height="10" rx="2"/><rect x="4" y="9" width="11" height="6" fill="#fff" stroke="none"/><path d="M22 11v2"/></svg></span></div>
+      <div class="clock relogio">10:41</div>
+      <div class="date dataHoje">domingo, 4 de outubro</div>
+      <div class="notif" aria-label="Mensagem recebida">
+        <div class="from"><span class="sms"><svg><use href="#i-chat"/></svg></span><b>INSS-AVISO</b><span>agora</span></div>
+        <p>Sr(a) Maria, seu BENEFÍCIO será BLOQUEADO em 24h. Regularize pagando a taxa de R$ 89,90 pelo PIX: <button class="link" id="linkGolpe">inss-regulariza.com/pix</button></p>
+      </div>
+      <div class="dock">
+        <button class="app" data-off="Telefone"><span class="ic" style="color:#22A06B"><svg><use href="#i-phone"/></svg></span>Telefone</button>
+        <button class="app" data-off="Mensagens"><span class="ic" style="color:#0369A1"><svg><use href="#i-chat"/></svg></span>Mensagens</button>
+        <button class="app" data-off="Banco"><span class="ic" style="color:#B4690E"><svg><use href="#i-bank"/></svg></span>Banco</button>
+        <button class="app ea" data-abrir><span class="ic" style="background:#0369A1;color:#fff"><svg><use href="#i-lupa"/></svg></span>Entenda Antes</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CASO 2: contrato em papel ============ -->
+  <section class="screen" data-s="celular2" hidden>
+    <div class="task"><span class="bubble b-sun"><svg><use href="#i-flag"/></svg></span><div><b class="k">Sua tarefa</b>O banco entregou este contrato de empréstimo consignado para você assinar. Use o <strong>Entenda Antes</strong> para entender o contrato antes de assinar.</div></div>
+    <div class="paper" aria-label="Contrato em papel">
+      <h3>Cédula de Crédito Bancário</h3>
+      <div class="bank">Empréstimo consignado INSS · Banco Horizonte S.A.</div>
+      <p>CLÁUSULA 1ª. O EMITENTE declara receber o valor líquido de R$ 5.000,00, a ser pago em 84 (oitenta e quatro) parcelas mensais e consecutivas de R$ 153,68, consignadas em seu benefício previdenciário.</p>
+      <p>CLÁUSULA 4ª. Taxa de juros de 2,49% a.m. (34,3% a.a.). Integra o valor financiado o prêmio de Seguro Prestamista no montante de R$ 390,00.</p>
+      <p>CLÁUSULA 9ª. O EMITENTE adere ao Cartão de Crédito Consignado (RMC), autorizando a reserva de 5% de seu benefício para pagamento da fatura mínima.</p>
+      <div class="sig"><span>Local e data</span><span>Assinatura do emitente</span></div>
+    </div>
+    <div class="phonebar">
+      <div class="lbl">Seu celular</div>
+      <div class="dock" style="margin-top:0;background:rgb(255 255 255 / .18)">
+        <button class="app" data-off="Telefone"><span class="ic" style="color:#22A06B"><svg><use href="#i-phone"/></svg></span>Telefone</button>
+        <button class="app" data-off="Mensagens"><span class="ic" style="color:#0369A1"><svg><use href="#i-chat"/></svg></span>Mensagens</button>
+        <button class="app" data-off="Banco"><span class="ic" style="color:#B4690E"><svg><use href="#i-bank"/></svg></span>Banco</button>
+        <button class="app ea" data-abrir><span class="ic" style="background:#0369A1;color:#fff"><svg><use href="#i-lupa"/></svg></span>Entenda Antes</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APP: início ============ -->
+  <section class="screen" data-s="home" hidden>
+    <div class="appbar">
+      <div class="brand"><span class="logo"><svg><use href="#i-lupa"/></svg></span>Entenda Antes</div>
+      <button class="ghost" data-encerrar>Encerrar</button>
+    </div>
+    <div class="hero">
+      <div><h1>Olá, Maria</h1><p>O que você quer entender antes de decidir?</p></div>
+      <svg viewBox="0 0 96 96" aria-hidden="true">
+        <rect x="14" y="10" width="50" height="66" rx="8" fill="#fff"/>
+        <path d="M24 26h30M24 36h30M24 46h20" stroke="#9CC9E4" stroke-width="5" stroke-linecap="round"/>
+        <circle cx="62" cy="58" r="20" fill="#FDE68A"/><circle cx="62" cy="58" r="12" fill="none" stroke="#0B3A5E" stroke-width="5"/>
+        <path d="M71 67l12 12" stroke="#0B3A5E" stroke-width="6" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <button class="tile" id="optFoto"><span class="bubble b-sun"><svg><use href="#i-cam"/></svg></span><span>Fotografar um papel<small>contrato, boleto, carta</small></span><svg class="chev"><use href="#i-chev"/></svg></button>
+    <button class="tile" id="optMsg"><span class="bubble b-teal"><svg><use href="#i-chat"/></svg></span><span>Mandar uma mensagem que recebi<small>SMS ou WhatsApp</small></span><svg class="chev"><use href="#i-chev"/></svg></button>
+    <button class="listen" data-falar="home"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir esta tela</button>
+  </section>
+
+  <!-- ============ CASO 1: escolher mensagem ============ -->
+  <section class="screen" data-s="lista" hidden>
+    <button class="back" data-voltar="home"><svg><use href="#i-back"/></svg>Voltar</button>
+    <h2 class="title">Qual mensagem você quer entender?</h2>
+    <button class="msg" id="msgGolpe"><span class="avatar b-red">IN</span><span class="body"><span class="who">INSS-AVISO<span>agora</span></span><span class="txt">Sr(a) Maria, seu BENEFÍCIO será BLOQUEADO em 24h. Regularize pagando a taxa de R$ 89,90 pelo PIX…</span></span></button>
+    <button class="msg" data-outra="Pedro (filho)"><span class="avatar b-plum">PE</span><span class="body"><span class="who">Pedro (filho)<span>9:12</span></span><span class="txt">Mãe, chego aí às 19h. Quer que eu leve pão?</span></span></button>
+    <button class="msg" data-outra="Farmácia"><span class="avatar b-teal">FB</span><span class="body"><span class="who">Farmácia Bem Estar<span>ontem</span></span><span class="txt">Seu pedido está pronto para retirada.</span></span></button>
+    <button class="listen" data-falar="lista"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir esta tela</button>
+  </section>
+
+  <!-- ============ CASO 1: confirmar ============ -->
+  <section class="screen" data-s="confirmar" hidden>
+    <button class="back" data-voltar="lista"><svg><use href="#i-back"/></svg>Voltar</button>
+    <h2 class="title">Entender esta mensagem?</h2>
+    <div class="sms-bubble"><div class="who">INSS-AVISO</div>Sr(a) Maria, seu BENEFÍCIO será BLOQUEADO em 24h. Regularize pagando a taxa de R$ 89,90 pelo PIX: inss-regulariza.com/pix</div>
+    <div class="center-art" aria-hidden="true">
+      <svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="70" fill="var(--accent-soft)"/><circle cx="68" cy="68" r="30" fill="var(--surface)" stroke="var(--accent)" stroke-width="9"/><path d="M90 90l26 26" stroke="var(--accent)" stroke-width="12" stroke-linecap="round"/><path d="M56 62h24M56 74h16" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" opacity=".5"/></svg>
+    </div>
+    <button class="primary" id="btnAnalisar"><svg><use href="#i-lupa"/></svg>Entender agora</button>
+  </section>
+
+  <!-- ============ CASO 2: câmera ============ -->
+  <section class="screen" data-s="camera" hidden>
+    <button class="back" data-voltar="home"><svg><use href="#i-back"/></svg>Voltar</button>
+    <h2 class="title">Aponte a câmera para o papel</h2>
+    <div class="viewfinder">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <span class="vf-hint">Papel enquadrado</span>
+      <div class="paper" aria-hidden="true">
+        <h3>Cédula de Crédito Bancário</h3>
+        <div class="bank">Empréstimo consignado INSS · Banco Horizonte S.A.</div>
+        <p>CLÁUSULA 1ª. O EMITENTE declara receber o valor líquido de R$ 5.000,00, a ser pago em 84 parcelas mensais de R$ 153,68…</p>
+        <p>CLÁUSULA 4ª. Taxa de juros de 2,49% a.m. Integra o valor financiado o Seguro Prestamista de R$ 390,00…</p>
+        <p>CLÁUSULA 9ª. O EMITENTE adere ao Cartão de Crédito Consignado (RMC)…</p>
+      </div>
+    </div>
+    <div class="shutterRow">
+      <button class="shutter" id="btnFoto" aria-label="Tirar foto"><i></i></button>
+      <span style="font-size:18px;font-weight:700">Tirar foto</span>
+    </div>
+    <button class="listen" data-falar="camera"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir esta tela</button>
+  </section>
+
+  <!-- ============ APP: analisando ============ -->
+  <section class="screen" data-s="analisando" hidden>
+    <div class="loading" role="status" aria-live="polite">
+      <div class="scan" aria-hidden="true">
+        <svg viewBox="0 0 150 180" width="150" height="180"><rect x="10" y="5" width="130" height="170" rx="14" fill="var(--surface)" stroke="var(--line)" stroke-width="3"/><path d="M32 40h86M32 62h86M32 84h70M32 106h86M32 128h50" stroke="var(--line)" stroke-width="8" stroke-linecap="round"/></svg>
+        <div class="bar"></div>
+      </div>
+      <h2 style="font-size:28px" id="anTitulo">Lendo a mensagem…</h2>
+      <p style="font-size:20px;color:var(--muted)" id="anTexto">Estamos vendo o que ela pede e se há algum risco.</p>
+    </div>
+  </section>
+
+  <!-- ============ CASO 1: resultado ============ -->
+  <section class="screen" data-s="resultado" hidden>
+    <div class="appbar">
+      <div class="brand"><span class="logo"><svg><use href="#i-lupa"/></svg></span>Entenda Antes</div>
+      <button class="ghost" data-encerrar>Encerrar</button>
+    </div>
+    <div class="verdict" role="alert">
+      <div class="light" aria-hidden="true">
+        <svg viewBox="0 0 64 150"><rect x="4" y="2" width="56" height="146" rx="18" fill="#16202E"/>
+          <circle class="glow" cx="32" cy="32" r="20" fill="#FF5A4E" opacity=".5"/><circle cx="32" cy="32" r="15" fill="#FF5A4E"/>
+          <circle cx="32" cy="75" r="15" fill="#4B5565"/><circle cx="32" cy="118" r="15" fill="#4B5565"/></svg>
+      </div>
+      <div><div class="k">Sinal vermelho</div><h2>PERIGO</h2><p>Esta mensagem parece golpe. Não pague e não abra o link.</p></div>
+    </div>
+    <button class="listen" data-falar="resultado"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir o resumo</button>
+    <div class="facts">
+      <div class="fact"><span class="bubble b-sun"><svg><use href="#i-money"/></svg></span><div><div class="k">O que pedem</div><div class="v">Pagar <strong>R$ 89,90</strong> pelo PIX em até 24 horas.</div></div></div>
+      <div class="fact"><span class="bubble b-blue"><svg><use href="#i-id"/></svg></span><div><div class="k">Quem diz ser</div><div class="v">O INSS.</div></div></div>
+      <div class="fact"><span class="bubble b-red"><svg><use href="#i-alert"/></svg></span><div><div class="k">Por que é perigoso</div>
+        <ul class="v">
+          <li><svg><use href="#i-x"/></svg><span>O INSS <strong>não cobra taxa</strong> para manter o benefício.</span></li>
+          <li><svg><use href="#i-x"/></svg><span>O INSS <strong>não manda link</strong> por mensagem.</span></li>
+          <li><svg><use href="#i-x"/></svg><span>O prazo curto serve para <strong>apressar você</strong>.</span></li>
+        </ul></div>
+      </div>
+    </div>
+    <button class="primary" data-ir="identificar">O que eu faço agora?</button>
+    <p class="note">O Entenda Antes orienta, mas não substitui um advogado.</p>
+  </section>
+
+  <!-- ============ CASO 2: resultado ============ -->
+  <section class="screen" data-s="resultado2" hidden>
+    <div class="appbar">
+      <div class="brand"><span class="logo"><svg><use href="#i-lupa"/></svg></span>Entenda Antes</div>
+      <button class="ghost" data-encerrar>Encerrar</button>
+    </div>
+    <div class="verdict amber" role="alert">
+      <div class="light" aria-hidden="true">
+        <svg viewBox="0 0 64 150"><rect x="4" y="2" width="56" height="146" rx="18" fill="#16202E"/>
+          <circle cx="32" cy="32" r="15" fill="#4B5565"/>
+          <circle class="glowA" cx="32" cy="75" r="20" fill="#F5A524" opacity=".5"/><circle cx="32" cy="75" r="15" fill="#F5A524"/>
+          <circle cx="32" cy="118" r="15" fill="#4B5565"/></svg>
+      </div>
+      <div><div class="k">Sinal amarelo</div><h2>ATENÇÃO</h2><p>Leia antes de assinar: os juros estão acima do limite e há 2 itens que você pode recusar.</p></div>
+    </div>
+    <button class="listen" data-falar="resultado2"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir o resumo</button>
+    <div class="money">
+      <div class="k">Quanto você recebe e quanto paga</div>
+      <div class="bars">
+        <div class="barrow"><div class="lab"><span>Você recebe</span><b>R$ 5.000,00</b></div><div class="track"><div class="fill recv"></div></div></div>
+        <div class="barrow"><div class="lab"><span>Você paga no total</span><b>R$ 12.909,12</b></div><div class="track"><div class="fill pay"></div></div></div>
+      </div>
+      <p class="sub"><strong>84 parcelas de R$ 153,68</strong>, descontadas do seu benefício por <strong>7 anos</strong>. Você paga mais que o dobro do que recebe.</p>
+    </div>
+    <div class="points">
+      <div class="k">O que diz o contrato</div>
+      <div class="pt"><span class="dot r"></span><div><strong>Seguro de R$ 390 incluído.</strong> Você pode recusar.<small>Obrigar a levar o seguro junto com o empréstimo é venda casada, proibida pelo Código de Defesa do Consumidor.</small></div></div>
+      <div class="pt"><span class="dot r"></span><div><strong>Cartão de crédito consignado incluído.</strong> Você não é obrigada a aceitar.<small>Ele reserva 5% do seu benefício todo mês.</small></div></div>
+      <div class="pt"><span class="dot y"></span><div><strong>Juros de 2,49% ao mês: acima do limite.</strong> Podem ser juros abusivos.<small>O INSS define um teto de juros para o consignado. Uma taxa acima dele não é permitida: peça a correção ao banco ou procure o Procon.</small></div></div>
+      <div class="pt"><span class="dot y"></span><div><strong>Prazo de 7 anos (84 parcelas).</strong> Quanto mais longo, mais juros você paga.<small>Pergunte quanto fica a parcela com um prazo menor.</small></div></div>
+      <div class="pt"><span class="dot g"></span><div><strong>Você pode desistir em até 7 dias</strong> depois de assinar.<small>Devolvendo o valor recebido.</small></div></div>
+      <div class="keyline"><span><i class="dot r"></i>pode recusar</span><span><i class="dot y"></i>preste atenção</span><span><i class="dot g"></i>direito seu</span></div>
+    </div>
+    <button class="primary" data-ir="q2total">O que eu faço agora?</button>
+    <p class="note">O Entenda Antes orienta, mas não substitui um advogado.</p>
+  </section>
+
+  <!-- ============ CASO 1: identificar ============ -->
+  <section class="screen" data-s="identificar" hidden>
+    <div class="center-art" aria-hidden="true"><svg viewBox="0 0 150 150" style="width:110px;height:110px"><circle cx="75" cy="75" r="70" fill="var(--accent-soft)"/><text x="75" y="100" text-anchor="middle" font-size="80" font-weight="700" fill="var(--accent)" font-family="Atkinson Hyperlegible, Arial, sans-serif">?</text></svg></div>
+    <h2 class="title" style="text-align:center">Na sua opinião, essa mensagem é:</h2>
+    <button class="choice" data-ident="golpe"><span class="bubble"><svg><use href="#i-alert"/></svg></span>Um golpe</button>
+    <button class="choice" data-ident="verdadeira"><span class="bubble"><svg><use href="#i-id"/></svg></span>Uma mensagem verdadeira do INSS</button>
+    <button class="choice" data-ident="nao_sei"><span class="bubble"><svg><use href="#i-q"/></svg></span>Não tenho certeza</button>
+  </section>
+
+  <!-- ============ CASO 2: perguntas de compreensão ============ -->
+  <section class="screen" data-s="q2total" hidden>
+    <div class="center-art" aria-hidden="true"><svg viewBox="0 0 150 150" style="width:110px;height:110px"><circle cx="75" cy="75" r="70" fill="var(--accent-soft)"/><text x="75" y="100" text-anchor="middle" font-size="80" font-weight="700" fill="var(--accent)" font-family="Atkinson Hyperlegible, Arial, sans-serif">?</text></svg></div>
+    <h2 class="title" style="text-align:center">Pelo contrato, quanto você vai pagar no total?</h2>
+    <button class="choice" data-q2total="errado_5000"><span class="bubble"><svg><use href="#i-money"/></svg></span>R$ 5.000</button>
+    <button class="choice" data-q2total="certo"><span class="bubble"><svg><use href="#i-money"/></svg></span>Cerca de R$ 12.900</button>
+    <button class="choice" data-q2total="errado_parcela"><span class="bubble"><svg><use href="#i-money"/></svg></span>R$ 153,68</button>
+    <button class="choice" data-q2total="nao_sei"><span class="bubble"><svg><use href="#i-q"/></svg></span>Não sei</button>
+  </section>
+  <section class="screen" data-s="q2seguro" hidden>
+    <div class="center-art" aria-hidden="true"><svg viewBox="0 0 150 150" style="width:110px;height:110px"><circle cx="75" cy="75" r="70" fill="var(--accent-soft)"/><text x="75" y="100" text-anchor="middle" font-size="80" font-weight="700" fill="var(--accent)" font-family="Atkinson Hyperlegible, Arial, sans-serif">?</text></svg></div>
+    <h2 class="title" style="text-align:center">E o seguro de R$ 390 que está no contrato:</h2>
+    <button class="choice" data-q2seguro="obrigatorio"><span class="bubble"><svg><use href="#i-doc"/></svg></span>É obrigatório</button>
+    <button class="choice" data-q2seguro="recusar"><span class="bubble"><svg><use href="#i-doc"/></svg></span>Posso recusar</button>
+    <button class="choice" data-q2seguro="nao_sei"><span class="bubble"><svg><use href="#i-q"/></svg></span>Não sei</button>
+  </section>
+
+  <!-- ============ próximo passo (cores neutras para não induzir a escolha) ============ -->
+  <section class="screen" data-s="passo" hidden>
+    <h2 class="title">O que você vai fazer?</h2>
+    <button class="choice" data-passo="pagar_pix" data-seguro="0"><span class="bubble"><svg><use href="#i-money"/></svg></span>Pagar a taxa pelo PIX</button>
+    <button class="choice" data-passo="ligar_135" data-seguro="1"><span class="bubble"><svg><use href="#i-phone"/></svg></span>Ligar para o INSS no 135</button>
+    <button class="choice" data-passo="abrir_link" data-seguro="0"><span class="bubble"><svg><use href="#i-link"/></svg></span>Abrir o link para ver</button>
+    <button class="choice" data-passo="apagar" data-seguro="1"><span class="bubble"><svg><use href="#i-trash"/></svg></span>Não pagar e apagar a mensagem</button>
+    <button class="choice" data-passo="pedir_ajuda" data-seguro="1"><span class="bubble"><svg><use href="#i-people"/></svg></span>Pedir ajuda ao meu filho Pedro</button>
+    <button class="listen" data-falar="passo"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir as opções</button>
+  </section>
+  <section class="screen" data-s="passo2" hidden>
+    <h2 class="title">O que você vai fazer com o contrato?</h2>
+    <button class="choice" data-passo="assinar" data-seguro="0"><span class="bubble"><svg><use href="#i-doc"/></svg></span>Assinar do jeito que está</button>
+    <button class="choice" data-passo="tirar_itens" data-seguro="1"><span class="bubble"><svg><use href="#i-bank"/></svg></span>Pedir ao banco para tirar o seguro e o cartão antes de assinar</button>
+    <button class="choice" data-passo="assinar_depois_ver" data-seguro="0"><span class="bubble"><svg><use href="#i-doc"/></svg></span>Assinar agora e ver isso depois</button>
+    <button class="choice" data-passo="mostrar_filho" data-seguro="1"><span class="bubble"><svg><use href="#i-people"/></svg></span>Mostrar ao meu filho Pedro antes de decidir</button>
+    <button class="choice" data-passo="nao_assinar" data-seguro="1"><span class="bubble"><svg><use href="#i-x" style="stroke:currentColor"/></svg></span>Não assinar agora e comparar com outro banco</button>
+    <button class="listen" data-falar="passo2"><span class="wave"><i></i><i></i><i></i><i></i></span>Ouvir as opções</button>
+  </section>
+
+  <!-- ============ fim ============ -->
+  <section class="screen" data-s="fim" hidden>
+    <div class="end ok" id="fimOk">
+      <div class="badge"><svg><use href="#i-check"/></svg></div>
+      <h2>Você se protegeu</h2>
+      <p id="fimOkTxt">Boa decisão.</p>
+      <div class="push"><span class="logo"><svg><use href="#i-lupa"/></svg></span><div><small>Entenda Antes · agora</small><span id="fimOkPush">Pedro foi avisado.</span></div></div>
+    </div>
+    <div class="end bad" id="fimBad" hidden>
+      <div class="badge"><svg><use href="#i-alert"/></svg></div>
+      <h2 id="fimBadTit">Atenção</h2>
+      <p id="fimBadTxt"></p>
+      <div class="push"><span class="logo"><svg><use href="#i-lupa"/></svg></span><div><small>Entenda Antes · agora</small>Pedro foi avisado para ajudar você.</div></div>
+    </div>
+    <div class="handoff"><span class="bubble b-teal"><svg><use href="#i-people"/></svg></span><div><strong>Fim da tarefa. Obrigado!</strong><br>Entregue o celular para a pessoa que está acompanhando o teste.</div></div>
+    <button class="fbtn alt" id="btnParaFac" style="align-self:center">Continuar (facilitador)</button>
+  </section>
+
+  <!-- ============ FACILITADOR: registro + perguntas sobre a utilização ============ -->
+  <section class="screen" data-s="registro" hidden>
+    <div class="fac">
+      <span class="eyebrow"><svg><use href="#i-clip"/></svg>Registro da sessão</span>
+      <h2 id="regTitulo">Participante</h2>
+      <div class="kpi" id="regResumo"></div>
+      <div class="qblock">
+        <p>O participante precisou de ajuda?</p>
+        <div class="seg" id="segAjuda" role="group" aria-label="Precisou de ajuda">
+          <button data-v="nao" aria-pressed="true">Não</button>
+          <button data-v="uma_vez" aria-pressed="false">Sim, uma vez</button>
+          <button data-v="varias" aria-pressed="false">Sim, várias vezes</button>
+        </div>
+      </div>
+      <div class="qblock">
+        <p>Pergunte: "Foi fácil ou difícil usar o aplicativo?" <span class="hint">Mostre as carinhas e marque a resposta.</span></p>
+        <div class="faces" id="faces" role="group" aria-label="Facilidade de uso"></div>
+      </div>
+      <div class="qblock">
+        <p>Pergunte: "Você usaria um aplicativo assim no dia a dia?"</p>
+        <div class="seg" id="segUsaria" role="group" aria-label="Usaria">
+          <button data-v="sim" aria-pressed="false">Sim</button>
+          <button data-v="talvez" aria-pressed="false">Talvez</button>
+          <button data-v="nao" aria-pressed="false">Não</button>
+        </div>
+      </div>
+      <label for="obs">Suas observações (onde travou, reações)
+        <textarea id="obs"></textarea>
+      </label>
+      <button class="fbtn" id="btnSalvar">Salvar e ver resultados</button>
+    </div>
+  </section>
+
+  <!-- ============ FACILITADOR: resultados ============ -->
+  <section class="screen" data-s="resultados" hidden>
+    <div class="fac">
+      <span class="eyebrow"><svg><use href="#i-clip"/></svg>Resultados · H2</span>
+      <h2>Como está o teste</h2>
+      <div class="tabs" role="tablist">
+        <button role="tab" data-tab="golpe" aria-selected="true">Caso 1 · Golpe</button>
+        <button role="tab" data-tab="consignado" aria-selected="false">Caso 2 · Consignado</button>
+      </div>
+      <div class="goal">
+        <div class="top"><b id="goalNum">0 de 10</b><span class="empty">sucessos · meta: 7 de 10</span></div>
+        <div class="slots" id="slots"></div>
+        <div class="legend"><span><i style="background:var(--green)"></i>Sucesso</span><span><i style="background:var(--red)"></i>Sem sucesso</span><span><i style="border:2px solid var(--accent)"></i>Meta (7ª)</span></div>
+      </div>
+      <p class="empty" id="regraSucesso"></p>
+      <div class="kpi" id="kpis"></div>
+      <div class="tbl"><table><thead><tr><th>Part.</th><th>Caso</th><th>Tempo</th><th>Entendeu</th><th>Passo</th><th>Seguro</th><th>Ajuda</th><th>Fácil (1–5)</th><th>Usaria</th><th>Sucesso</th></tr></thead><tbody id="tbody"></tbody></table></div>
+      <p class="empty" id="semDados" hidden>Nenhuma sessão salva neste aparelho ainda.</p>
+      <p class="empty" id="treinoInfo"></p>
+      <p style="font-size:14px">Para levar à planilha, copie o texto abaixo e cole no Google Planilhas. Vão as sessões dos dois casos, sem as de treino.</p>
+      <pre class="tsv" id="tsv"></pre>
+      <div class="row">
+        <button class="fbtn" id="btnCopiar">Copiar para planilha</button>
+        <button class="fbtn alt" id="btnNova">Nova sessão</button>
+        <button class="fbtn warn" id="btnLimpar">Apagar todas</button>
+      </div>
+      <div class="row" id="confirmaLimpar" hidden>
+        <p style="font-size:14px;flex-basis:100%">Apagar todas as sessões deste aparelho? Não dá para desfazer.</p>
+        <button class="fbtn warn" id="btnLimparSim">Sim, apagar</button>
+        <button class="fbtn alt" id="btnLimparNao">Cancelar</button>
+      </div>
+      <p class="empty">As sessões ficam salvas só neste aparelho e neste navegador. Copie para a planilha ao fim de cada dia de teste.</p>
+    </div>
+  </section>
+
+</div></div>
+
+<div class="toast" id="toast" hidden></div>
+<div class="flash" id="flash"></div>
+
+<script>
+(function(){
+  const KEY = 'entenda-antes-h2-sessoes';
+  const $ = (s, el=document) => el.querySelector(s);
+  const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+
+  // ---------- armazenamento (melhor esforço) ----------
+  let sessoes = [];
+  try { sessoes = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e){ sessoes = []; }
+  sessoes.forEach(x => { if (!x.caso) x.caso = 'golpe'; });
+  const gravar = () => { try { localStorage.setItem(KEY, JSON.stringify(sessoes)); } catch(e){} };
+
+  // ---------- sessão atual ----------
+  let s = null, casoEscolhido = 'golpe';
+  const agora = () => Date.now();
+  const novaSessao = (id, idade, caso, treino) => ({
+    id, idade, caso, treino, inicio: new Date().toISOString(), t0: agora(),
+    eventos: [], audio: 0, linkSms: 0, caminhosErrados: 0,
+    identificou: '', q2total: '', q2seguro: '', passo: '', seguro: null,
+    ajuda: 'nao', facilidade: null, usaria: '', obs: '', duracaoSeg: null, encerrou: false, sucesso: false
+  });
+  const log = (tipo, extra) => { if (s) s.eventos.push({ t: Math.round((agora()-s.t0)/100)/10, tipo, ...(extra||{}) }); };
+  const erro = (tipo, msg, extra) => { if (s) s.caminhosErrados++; log(tipo, extra); toast(msg); };
+
+  // ---------- navegação ----------
+  function ir(nome){
+    $$('[data-s]').forEach(el => el.hidden = el.dataset.s !== nome);
+    window.scrollTo(0,0); const area=$('#tela'); if (area) area.scrollTop = 0;
+    log('tela', { tela: nome }); $('#toast').hidden = true; pararAudio();
+  }
+
+  // ---------- toast ----------
+  let tt;
+  function toast(msg){ const el=$('#toast'); el.textContent=msg; el.hidden=false; clearTimeout(tt); tt=setTimeout(()=>el.hidden=true, 3200); }
+
+  // ---------- áudio ----------
+  const textos = {
+    home: 'Olá, Maria. O que você quer entender antes de decidir? Você pode fotografar um papel, como contrato, boleto ou carta. Ou mandar uma mensagem que recebeu, por SMS ou WhatsApp.',
+    lista: 'Qual mensagem você quer entender? Toque na mensagem. A primeira é do INSS-AVISO. A segunda é do seu filho Pedro. A terceira é da Farmácia.',
+    camera: 'Aponte a câmera para o papel. Quando o papel estiver dentro das marcas amarelas, toque no botão redondo para tirar a foto.',
+    resultado: 'Perigo. Esta mensagem parece golpe. Não pague e não abra o link. O que pedem: pagar oitenta e nove reais e noventa centavos pelo PIX em até vinte e quatro horas. Quem diz ser: o INSS. Por que é perigoso: o INSS não cobra taxa para manter o benefício. O INSS não manda link por mensagem. E o prazo curto serve para apressar você.',
+    resultado2: 'Atenção. Leia antes de assinar: os juros estão acima do limite e há dois itens que você pode recusar. Você recebe cinco mil reais e paga no total doze mil, novecentos e nove reais, em oitenta e quatro parcelas de cento e cinquenta e três reais e sessenta e oito centavos, descontadas do seu benefício por sete anos. Você paga mais que o dobro do que recebe. O contrato inclui um seguro de trezentos e noventa reais. Você pode recusar. Obrigar a levar o seguro junto é venda casada, proibida pelo Código de Defesa do Consumidor. O contrato também inclui um cartão de crédito consignado, que reserva cinco por cento do seu benefício todo mês. Você não é obrigada a aceitar. Os juros são de dois vírgula quarenta e nove por cento ao mês, acima do limite que o INSS permite. Podem ser juros abusivos. O prazo é de sete anos: quanto mais longo, mais juros você paga. E você pode desistir em até sete dias depois de assinar.',
+    passo: 'O que você vai fazer? Pagar a taxa pelo PIX. Ligar para o INSS no cento e trinta e cinco. Abrir o link para ver. Não pagar e apagar a mensagem. Ou pedir ajuda ao seu filho Pedro.',
+    passo2: 'O que você vai fazer com o contrato? Assinar do jeito que está. Pedir ao banco para tirar o seguro e o cartão antes de assinar. Assinar agora e ver isso depois. Mostrar ao seu filho Pedro antes de decidir. Ou não assinar agora e comparar com outro banco.'
+  };
+  function pararAudio(){ if ('speechSynthesis' in window) speechSynthesis.cancel(); $$('.listen').forEach(b=>b.classList.remove('on')); }
+  function falar(chave, botao){
+    if (s) s.audio++; log('audio', { tela: chave });
+    if (!('speechSynthesis' in window)) { toast('O áudio não está disponível neste aparelho.'); return; }
+    pararAudio();
+    const u = new SpeechSynthesisUtterance(textos[chave]); u.lang = 'pt-BR'; u.rate = 0.9;
+    const v = speechSynthesis.getVoices().find(v => /pt[-_]BR/i.test(v.lang)); if (v) u.voice = v;
+    u.onend = u.onerror = () => botao.classList.remove('on');
+    botao.classList.add('on');
+    speechSynthesis.speak(u);
+  }
+  if ('speechSynthesis' in window) speechSynthesis.getVoices();
+
+  // ---------- relógio ----------
+  function relogio(){
+    const d=new Date(), h=d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+    $$('.relogio,.relogioMini').forEach(e => e.textContent = h);
+    $$('.dataHoje').forEach(e => e.textContent = d.toLocaleDateString('pt-BR',{weekday:'long', day:'numeric', month:'long'}));
+  }
+  relogio(); setInterval(relogio, 30000);
+
+  // ---------- início ----------
+  function atualizarContagem(){
+    const reais = sessoes.filter(x=>!x.treino);
+    const c1 = reais.filter(x=>x.caso==='golpe').length, c2 = reais.filter(x=>x.caso==='consignado').length;
+    $('#contagem').textContent = reais.length ? `Salvas neste aparelho: Caso 1 = ${c1} · Caso 2 = ${c2}.` : '';
+  }
+  atualizarContagem();
+
+  $$('.case').forEach(b => b.addEventListener('click', () => {
+    casoEscolhido = b.dataset.caso;
+    $$('.case').forEach(x => x.setAttribute('aria-pressed', x===b?'true':'false'));
+  }));
+
+  function iniciar(treinoForcado){
+    const treino = treinoForcado || $('#treino').checked;
+    const n = sessoes.filter(x=>!x.treino).length + 1;
+    const id = $('#pid').value.trim() || (treino ? 'TREINO' : `P${String(n).padStart(2,'0')}`);
+    s = novaSessao(id, $('#pidade').value.trim(), casoEscolhido, treino);
+    ir(casoEscolhido==='golpe' ? 'celular' : 'celular2');
+  }
+  $('#btnIniciar').addEventListener('click', () => iniciar(false));
+  $('#btnVerRes').addEventListener('click', () => { renderResultados(); ir('resultados'); });
+
+  // ---------- guia rápido ----------
+  const ok = '<svg><use href="#i-check"/></svg>', no = '<svg><use href="#i-x"/></svg>';
+  const mini = (extra) => `<div class="mini"><div><div class="ln" style="width:60%"></div><div class="rd"><i></i><div class="ln" style="flex:1;background:#F4B4AE"></div></div><div class="ln"></div><div class="ln" style="width:80%"></div>${extra||''}<div class="bt"></div></div></div>`;
+  const passos = [
+    { cor:'b-blue', t:'Antes de começar', art:`<svg class="big" style="color:var(--accent)"><use href="#i-bat"/></svg>`,
+      li:[[1,'Celular carregado, brilho alto e volume alto (para o áudio).'],[1,'Ative o "Não perturbe" para nenhuma notificação real aparecer.'],[1,'Abra o protótipo, escolha o caso e faça uma sessão de treino com alguém do grupo.']] },
+    { cor:'b-teal', t:'Receba o participante', art:`<svg class="big" style="color:var(--teal)"><use href="#i-people"/></svg>`,
+      say:'"Estamos testando o aplicativo, não o(a) senhor(a). Não existe resposta errada. Pode falar em voz alta o que estiver pensando."',
+      li:[[1,'Peça autorização para tirar fotos (podem ser sem o rosto).'],[1,'Anote o código (P01, P02…) e a idade.']] },
+    { cor:'b-sun', t:'Leia a tarefa e entregue o celular', art:`<div style="display:flex;gap:18px;align-items:center"><svg class="big" style="color:var(--sun)"><use href="#i-mega"/></svg>${mini()}</div>`,
+      say:'Caso 1: "Imagine que o(a) senhor(a) recebeu esta mensagem. Use o Entenda Antes para saber o que fazer."<br><br>Caso 2: "O banco entregou este contrato para o(a) senhor(a) assinar. Use o Entenda Antes para entender antes de assinar."',
+      li:[[1,'A tarefa também aparece escrita no topo da tela.']] },
+    { cor:'b-plum', t:'Observe sem ajudar', art:`<div style="display:flex;gap:18px;align-items:center">${mini()}<svg class="big" style="color:var(--plum)"><use href="#i-eye"/></svg></div>`,
+      say:'Se pedir ajuda, devolva a pergunta: "O que o(a) senhor(a) faria se estivesse sozinho(a)?"',
+      li:[[0,'Não aponte para a tela nem explique o que fazer.'],[0,'Não diga se a resposta está certa ou errada.'],[1,'Se travar por mais de 1 minuto, ajude uma vez e marque "precisou de ajuda".'],[1,'Anote onde travou e frases que a pessoa disser.']] },
+    { cor:'b-teal', t:'Faça as perguntas finais', art:`<svg class="big" style="color:var(--teal)"><use href="#i-clip"/></svg>`,
+      li:[[1,'Quando aparecer "Fim da tarefa", pegue o celular e toque em "Continuar (facilitador)".'],[1,'A tela mostra 2 perguntas: se foi fácil (com carinhas) e se usaria no dia a dia.'],[1,'Leia cada pergunta e marque a resposta da pessoa.']] },
+    { cor:'b-blue', t:'Salve e leve para a planilha', art:`<svg class="big" style="color:var(--accent)"><use href="#i-save"/></svg>`,
+      li:[[1,'Toque em "Salvar". O protótipo calcula se a sessão foi um sucesso.'],[1,'Meta da H2: 7 de 10 sessões com sucesso em cada caso.'],[1,'No fim do dia: "Copiar para planilha" e cole no Google Planilhas.'],[0,'Não limpe os dados do navegador: as sessões ficam só neste aparelho.']],
+      fim:true }
+  ];
+  let gi = 0;
+  function renderGuia(){
+    const p = passos[gi];
+    $('#gprog').innerHTML = passos.map((_,i)=>`<i class="${i<=gi?'on':''}"></i>`).join('');
+    $('#gcard').innerHTML =
+      `<div class="gart ${p.cor}">${p.art}</div>`+
+      `<div class="gstep">Passo ${gi+1} de ${passos.length}</div><h2>${p.t}</h2>`+
+      (p.say ? `<div class="say"><b>Fale assim</b>${p.say}</div>` : '')+
+      `<ul>${p.li.map(([b,t])=>`<li class="${b?'':'no'}">${b?ok:no}<span>${t}</span></li>`).join('')}</ul>`+
+      (p.fim ? `<button class="fbtn" id="gTreino" style="margin-top:4px">Fazer uma sessão de treino agora</button>` : '');
+    $('#gAnt').disabled = gi===0; $('#gAnt').style.visibility = gi===0?'hidden':'visible';
+    $('#gProx').textContent = gi===passos.length-1 ? 'Concluir' : 'Próximo';
+    const t = $('#gTreino'); if (t) t.addEventListener('click', () => { $('#pid').value=''; iniciar(true); });
+  }
+  $('#btnGuia').addEventListener('click', () => { gi=0; renderGuia(); ir('guia'); });
+  $('#guiaVoltar').addEventListener('click', () => ir('inicio'));
+  $('#gAnt').addEventListener('click', () => { if (gi>0){ gi--; renderGuia(); } });
+  $('#gProx').addEventListener('click', () => { if (gi<passos.length-1){ gi++; renderGuia(); const a=$('#tela'); if(a) a.scrollTop=0; } else ir('inicio'); });
+
+  // ---------- celular ----------
+  $('#linkGolpe').addEventListener('click', () => { if(s) s.linkSms++; log('clicou_link_sms'); toast('Neste teste o link não abre.'); });
+  $$('[data-off]').forEach(b => b.addEventListener('click', () => erro('app_errado','Neste teste, use o aplicativo Entenda Antes.',{ app: b.dataset.off })));
+  $$('[data-abrir]').forEach(b => b.addEventListener('click', () => ir('home')));
+
+  // ---------- app ----------
+  $('#optFoto').addEventListener('click', () => {
+    if (s && s.caso==='consignado') ir('camera');
+    else erro('opcao_foto','Esta opção não faz parte do teste. Tente a outra.');
+  });
+  $('#optMsg').addEventListener('click', () => {
+    if (s && s.caso==='consignado') erro('opcao_mensagem','Neste teste, o contrato é um papel. Tente a outra opção.');
+    else ir('lista');
+  });
+  $$('[data-outra]').forEach(b => b.addEventListener('click', () => erro('mensagem_errada','Esta mensagem não é a do teste. Escolha a do INSS.',{ de: b.dataset.outra })));
+  $('#msgGolpe').addEventListener('click', () => ir('confirmar'));
+  $$('[data-voltar]').forEach(b => b.addEventListener('click', () => { log('voltar'); ir(b.dataset.voltar); }));
+  $$('[data-ir]').forEach(b => b.addEventListener('click', () => ir(b.dataset.ir)));
+  $$('[data-falar]').forEach(b => b.addEventListener('click', () => falar(b.dataset.falar, b)));
+
+  function analisar(tit, txt, destino){
+    $('#anTitulo').textContent = tit; $('#anTexto').textContent = txt;
+    ir('analisando'); setTimeout(() => ir(destino), 2600);
+  }
+  $('#btnAnalisar').addEventListener('click', () => analisar('Lendo a mensagem…','Estamos vendo o que ela pede e se há algum risco.','resultado'));
+  $('#btnFoto').addEventListener('click', () => {
+    const f=$('#flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go');
+    log('foto');
+    setTimeout(() => analisar('Lendo o contrato…','Estamos procurando valores, juros e cláusulas importantes.','resultado2'), 350);
+  });
+
+  // caso 1
+  $$('[data-ident]').forEach(b => b.addEventListener('click', () => { s.identificou = b.dataset.ident; log('identificou', { r: s.identificou }); ir('passo'); }));
+  // caso 2
+  $$('[data-q2total]').forEach(b => b.addEventListener('click', () => { s.q2total = b.dataset.q2total; log('q2total', { r: s.q2total }); ir('q2seguro'); }));
+  $$('[data-q2seguro]').forEach(b => b.addEventListener('click', () => { s.q2seguro = b.dataset.q2seguro; log('q2seguro', { r: s.q2seguro }); ir('passo2'); }));
+
+  const finais = {
+    ligar_135:'Ligar para o 135 é o jeito certo de confirmar com o INSS. Essa mensagem tinha sinais de golpe.',
+    apagar:'Não pagar e apagar a mensagem evita o golpe. Essa mensagem tinha sinais de golpe.',
+    pedir_ajuda:'Pedir ajuda a alguém de confiança é uma ótima escolha. Essa mensagem tinha sinais de golpe.',
+    tirar_itens:'Você pode pedir para tirar o seguro e o cartão. Assim a parcela fica menor.',
+    mostrar_filho:'Mostrar o contrato a alguém de confiança antes de assinar é uma ótima escolha.',
+    nao_assinar:'Comparar com outro banco pode trazer juros menores. Você não precisa decidir hoje.'
+  };
+  $$('[data-passo]').forEach(b => b.addEventListener('click', () => {
+    s.passo = b.dataset.passo; s.seguro = b.dataset.seguro === '1';
+    s.duracaoSeg = Math.round((agora()-s.t0)/1000);
+    log('passo', { p: s.passo, seguro: s.seguro });
+    $('#fimOk').hidden = !s.seguro; $('#fimBad').hidden = s.seguro;
+    $('#fimOkTxt').textContent = finais[s.passo] || 'Boa decisão.';
+    $('#fimOkPush').textContent = s.caso==='golpe' ? 'Pedro foi avisado de que você recebeu uma mensagem perigosa.' : 'Pedro recebeu o resumo do contrato para ver com você.';
+    if (s.caso==='golpe'){
+      $('#fimBadTit').textContent = 'Atenção: isso pode ser um golpe';
+      $('#fimBadTxt').textContent = 'O INSS não cobra taxa e não manda link por mensagem. Antes de pagar, ligue para o 135 ou fale com alguém de confiança.';
+    } else {
+      $('#fimBadTit').textContent = 'Atenção antes de assinar';
+      $('#fimBadTxt').textContent = 'Este contrato tem juros acima do limite, além de um seguro e um cartão que você pode recusar. Depois de assinar, você ainda pode desistir em até 7 dias.';
+    }
+    ir('fim');
+  }));
+
+  $$('[data-encerrar]').forEach(b => b.addEventListener('click', () => {
+    if (!s) return; s.encerrou = true; s.duracaoSeg = Math.round((agora()-s.t0)/1000); log('encerrou'); abrirRegistro();
+  }));
+  $('#btnParaFac').addEventListener('click', abrirRegistro);
+
+  // ---------- registro ----------
+  const rostos = [
+    ['Muito difícil','M8 17c1.5-2 6.5-2 8 0','#E5484D'],
+    ['Difícil','M8.5 16.5c1.5-1 5.5-1 7 0','#F97316'],
+    ['Mais ou menos','M8.5 16h7','#F5A524'],
+    ['Fácil','M8.5 15.5c1.5 1 5.5 1 7 0','#7CB342'],
+    ['Muito fácil','M8 14.5c1.5 2.5 6.5 2.5 8 0','#2EA36B']
+  ];
+  $('#faces').innerHTML = rostos.map(([n,boca,c],i)=>`<button data-v="${i+1}" aria-pressed="false" aria-label="${i+1} - ${n}"><svg viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10" fill="${c}" fill-opacity=".15"/><circle cx="9" cy="10" r=".8" fill="${c}"/><circle cx="15" cy="10" r=".8" fill="${c}"/><path d="${boca}"/></svg>${n}</button>`).join('');
+  const segPick = sel => $$(sel+' button').forEach(b => b.addEventListener('click', () => $$(sel+' button').forEach(x => x.setAttribute('aria-pressed', x===b?'true':'false'))));
+  segPick('#segAjuda'); segPick('#segUsaria'); segPick('#faces');
+  const segVal = sel => { const b=$$(sel+' button').find(x=>x.getAttribute('aria-pressed')==='true'); return b ? b.dataset.v : ''; };
+
+  const entendeuTxt = x => x.caso==='golpe' ? identNome[x.identificou] : `${x.q2total==='certo'?'Total ✓':'Total ✗'} · ${x.q2seguro==='recusar'?'Seguro ✓':'Seguro ✗'}`;
+
+  function abrirRegistro(){
+    $('#regTitulo').innerHTML = `${esc(s.id)} · ${s.caso==='golpe'?'Caso 1 (golpe)':'Caso 2 (consignado)'} ${s.treino?'<span class="tag">treino</span>':''}`;
+    $('#regResumo').innerHTML =
+      `<div><b>${fmtTempo(s.duracaoSeg)}</b><span>tempo até decidir</span></div>`+
+      `<div><b style="font-size:18px">${entendeuTxt(s)}</b><span>${s.caso==='golpe'?'identificou como':'compreensão'}</span></div>`+
+      `<div><b>${s.seguro===null?'—':(s.seguro?'Seguro':'Inseguro')}</b><span>passo escolhido</span></div>`+
+      `<div><b>${s.audio}</b><span>vezes que ouviu o áudio</span></div>`;
+    $$('#segAjuda button').forEach(x => x.setAttribute('aria-pressed', x.dataset.v==='nao'?'true':'false'));
+    $$('#segUsaria button,#faces button').forEach(x => x.setAttribute('aria-pressed','false'));
+    $('#obs').value = '';
+    ir('registro');
+  }
+  const sucessoDe = x => x.caso==='golpe'
+    ? (x.identificou==='golpe' && x.seguro===true && x.ajuda==='nao')
+    : (x.q2total==='certo' && x.q2seguro==='recusar' && x.seguro===true && x.ajuda==='nao');
+
+  $('#btnSalvar').addEventListener('click', () => {
+    s.ajuda = segVal('#segAjuda') || 'nao';
+    s.facilidade = segVal('#faces') ? Number(segVal('#faces')) : null;
+    s.usaria = segVal('#segUsaria');
+    s.obs = $('#obs').value.trim();
+    s.sucesso = sucessoDe(s);
+    const caso = s.caso, treino = s.treino;
+    sessoes.push(s); gravar(); s = null;
+    $('#pid').value=''; $('#pidade').value=''; $('#treino').checked = false; atualizarContagem();
+    aba = caso; renderResultados(); ir('resultados'); toast(treino ? 'Treino salvo (não entra na meta).' : 'Sessão salva.');
+  });
+
+  // ---------- resultados ----------
+  const fmtTempo = seg => seg==null ? '—' : `${Math.floor(seg/60)}:${String(seg%60).padStart(2,'0')}`;
+  const passoNome = { pagar_pix:'Pagar PIX', ligar_135:'Ligar 135', abrir_link:'Abrir link', apagar:'Apagar', pedir_ajuda:'Pedir ajuda',
+    assinar:'Assinar', tirar_itens:'Tirar seguro/cartão', assinar_depois_ver:'Assinar e ver depois', mostrar_filho:'Mostrar ao filho', nao_assinar:'Comparar bancos', '':'—' };
+  const identNome = { golpe:'Golpe', verdadeira:'Verdadeira', nao_sei:'Não sabe', '':'—' };
+  const ajudaNome = { nao:'Não', uma_vez:'Uma vez', varias:'Várias' };
+  const pill = ok => `<span class="pill ${ok?'y':'n'}">${ok?'Sim':'Não'}</span>`;
+  let aba = 'golpe';
+
+  $$('[data-tab]').forEach(b => b.addEventListener('click', () => { aba = b.dataset.tab; renderResultados(); }));
+
+  function renderResultados(){
+    $$('[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab===aba?'true':'false'));
+    const reais = sessoes.filter(x=>!x.treino);
+    const lista = reais.filter(x=>x.caso===aba);
+    const n = lista.length, okN = lista.filter(x=>x.sucesso).length;
+    const total = Math.max(10, n);
+    $('#goalNum').textContent = `${okN} de ${total}`;
+    $('#slots').style.gridTemplateColumns = `repeat(${Math.min(total,10)},1fr)`;
+    $('#slots').innerHTML = Array.from({length: total}, (_, i) => {
+      const x = lista[i]; const cls = x ? (x.sucesso?'y':'n') : ''; const meta = i===6 ? ' meta' : '';
+      const ic = x ? `<svg><use href="#${x.sucesso?'i-check':'i-x'}"/></svg>` : '';
+      return `<span class="slot ${cls}${meta}" title="${x?esc(x.id):'Sessão '+(i+1)}">${ic}</span>`;
+    }).join('');
+    $('#regraSucesso').textContent = aba==='golpe'
+      ? 'Sucesso no Caso 1 = identificou o golpe + escolheu passo seguro + não precisou de ajuda.'
+      : 'Sucesso no Caso 2 = acertou o total a pagar + sabe que pode recusar o seguro + escolheu passo seguro + não precisou de ajuda.';
+    const fac = lista.map(x=>x.facilidade).filter(Boolean);
+    const tempos = lista.map(x=>x.duracaoSeg).filter(x=>x!=null);
+    const entendeu = aba==='golpe' ? lista.filter(x=>x.identificou==='golpe').length : lista.filter(x=>x.q2total==='certo'&&x.q2seguro==='recusar').length;
+    $('#kpis').innerHTML =
+      `<div><b>${entendeu} de ${n}</b><span>${aba==='golpe'?'identificaram o golpe':'entenderam total e seguro'}</span></div>`+
+      `<div><b>${lista.filter(x=>x.seguro).length} de ${n}</b><span>escolheram passo seguro</span></div>`+
+      `<div><b>${fmtTempo(tempos.length?Math.round(tempos.reduce((a,b)=>a+b,0)/tempos.length):null)}</b><span>tempo médio</span></div>`+
+      `<div><b>${fac.length?(fac.reduce((a,b)=>a+b,0)/fac.length).toFixed(1).replace('.',','):'—'}</b><span>facilidade média (1 a 5)</span></div>`;
+    $('#tbody').innerHTML = lista.map(x => `<tr><td>${esc(x.id)}</td><td>${x.caso==='golpe'?'1':'2'}</td><td>${fmtTempo(x.duracaoSeg)}</td><td>${entendeuTxt(x)}</td><td>${passoNome[x.passo]||'—'}</td><td>${x.seguro===null?'—':pill(x.seguro)}</td><td>${ajudaNome[x.ajuda]}</td><td>${x.facilidade??'—'}</td><td>${x.usaria||'—'}</td><td>${pill(x.sucesso)}</td></tr>`).join('');
+    $('#semDados').hidden = n>0;
+    const tr = sessoes.filter(x=>x.treino).length;
+    $('#treinoInfo').textContent = tr ? `${tr} sessão(ões) de treino salva(s), fora da meta e da planilha.` : '';
+    $('#tsv').textContent = tsv();
+  }
+  function tsv(){
+    const cab = ['participante','caso','idade','data','tempo_seg','identificou_golpe','total_a_pagar','seguro','passo','passo_seguro','ajuda','facilidade_1a5','usaria','vezes_audio','cliques_link_sms','caminhos_errados','encerrou_antes','sucesso','observacoes'];
+    const limpa = t => (t||'').replace(/[\t\n]+/g,' ');
+    const linhas = sessoes.filter(x=>!x.treino).map(x => [x.id, x.caso==='golpe'?'1 golpe':'2 consignado', x.idade, x.inicio.slice(0,10), x.duracaoSeg??'',
+      x.caso==='golpe'?identNome[x.identificou]:'', x.q2total||'', x.q2seguro||'', passoNome[x.passo]||'', x.seguro===null?'':(x.seguro?'sim':'não'),
+      ajudaNome[x.ajuda], x.facilidade??'', x.usaria||'', x.audio, x.linkSms, x.caminhosErrados, x.encerrou?'sim':'não', x.sucesso?'sim':'não', limpa(x.obs)]);
+    return [cab, ...linhas].map(l => l.join('\t')).join('\n');
+  }
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  $('#btnCopiar').addEventListener('click', () => {
+    const txt = tsv();
+    const fallback = () => { const r=document.createRange(); r.selectNodeContents($('#tsv')); const sel=getSelection(); sel.removeAllRanges(); sel.addRange(r); toast('Texto selecionado. Use Copiar do seu aparelho.'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(()=>toast('Copiado. Cole no Google Planilhas.'), fallback);
+    else fallback();
+  });
+  $('#btnNova').addEventListener('click', () => ir('inicio'));
+  $('#btnLimpar').addEventListener('click', () => $('#confirmaLimpar').hidden = false);
+  $('#btnLimparNao').addEventListener('click', () => $('#confirmaLimpar').hidden = true);
+  $('#btnLimparSim').addEventListener('click', () => { sessoes = []; gravar(); $('#confirmaLimpar').hidden = true; atualizarContagem(); renderResultados(); toast('Sessões apagadas.'); });
+})();
+</script>
+
+</body>
+</html>
